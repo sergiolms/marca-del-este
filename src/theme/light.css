@@ -12,6 +12,7 @@ html, body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   background: #2a2420;
+  touch-action: manipulation;
 }
 
 button, input, select, textarea {
@@ -180,6 +181,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 600; letter-spacing:
   backdrop-filter: blur(4px);
   display: grid; place-items: center;
   z-index: 100; padding: 16px;
+  overflow: hidden;
   animation: fade-in 180ms var(--ease-standard);
 }
 .char-menu {
@@ -199,6 +201,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 600; letter-spacing:
 
 .identity {
   padding: 14px 16px 4px;
+  max-width: 640px; width: 100%; margin-inline: auto;
 }
 .identity__name-row {
   display: flex; align-items: center; gap: 10px;
@@ -286,7 +289,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 600; letter-spacing:
 
 /* ---------- Section ---------- */
 
-.section { margin: 16px 12px 0; }
+.section { margin: 16px auto 0; padding-inline: 12px; max-width: 640px; width: 100%; }
 .section__title {
   font-family: var(--font-display); font-weight: 600; font-size: 13px;
   text-transform: uppercase; letter-spacing: .16em;
@@ -484,7 +487,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 600; letter-spacing:
   font-size: 11px; font-weight: 700;
   box-shadow: 0 2px 6px rgba(62,107,74,.35);
 }
-.hp__adjust { margin-top: 10px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+.hp__adjust { margin-top: 10px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; }
 .hp__adjust button {
   appearance: none; border: 1px solid var(--aged-line);
   background: var(--parchment-deep); color: var(--ink);
@@ -498,21 +501,23 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 600; letter-spacing:
 .hp__adjust button.minus { background: linear-gradient(180deg, #f4cdc0, #e6b1a0); border-color: #b88177; }
 
 .hp-meta {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 8px;
 }
 .hp-meta__row {
-  display: grid; grid-template-columns: auto 1fr; gap: 8px; align-items: center;
+  display: grid; grid-template-columns: auto 1fr; gap: 6px; align-items: center;
   background: var(--card-bg);
   border: 1px solid var(--aged-line);
   border-radius: 10px;
-  padding: 6px 10px;
-  font-size: 12px; color: var(--ink-muted); letter-spacing: .06em; text-transform: uppercase; font-weight: 600;
+  padding: 6px 8px;
+  font-size: 11px; color: var(--ink-muted); letter-spacing: .04em; text-transform: uppercase; font-weight: 600;
+  min-width: 0; overflow: hidden;
 }
 .hp-meta__row input {
   border: none; background: transparent;
   font-family: var(--font-display); font-weight: 700; font-size: 18px; color: var(--ink);
   text-align: right; padding: 2px 0;
   appearance: textfield;
+  min-width: 0; width: 100%;
 }
 
 .move-card {
@@ -799,11 +804,12 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 600; letter-spacing:
 
 .coins {
   display: grid; grid-template-columns: repeat(5, 1fr);
-  gap: 6px; padding: 14px 10px; align-items: end;
+  gap: 4px; padding: 14px 6px; align-items: end;
+  overflow: hidden;
 }
-.coin-col { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.coin-col { display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 0; }
 .coin-col__stack {
-  position: relative; width: 62px; height: 126px;
+  position: relative; width: 100%; max-width: 62px; height: 126px;
   overflow: visible;
   filter: drop-shadow(0 2px 3px rgba(0,0,0,.25));
 }
@@ -1380,6 +1386,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 600; letter-spacing:
   padding: calc(12px + env(safe-area-inset-top)) 12px calc(92px + env(safe-area-inset-bottom));
   box-sizing: border-box;
   z-index: 200;
+  overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior: contain;
   animation: fade-in 200ms var(--ease-standard);

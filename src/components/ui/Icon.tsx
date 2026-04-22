@@ -20,6 +20,8 @@ export type IconName =
   | "shield"
   | "shop"
   | "sword"
+  | "lock"
+  | "unlock"
   | "trash"
   | "userAdd";
 
@@ -48,6 +50,8 @@ const paths: Record<IconName, JSX.Element> = {
   shield: <path d="M12 3 20 6v5c0 5-3 8-8 10-5-2-8-5-8-10V6l8-3Z" />,
   shop: <path d="M4 10h16l-1-5H5l-1 5Zm1 0v10h14V10M8 20v-6h8v6" />,
   sword: <path d="M14 4h6v6L9 21l-6-6L14 4Zm-4 12-2-2M5 19l4-4" />,
+  lock: <path d="M6 10V7a6 6 0 1 1 12 0v3M5 10h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1Zm7 4v3" />,
+  unlock: <path d="M7 10V7a5 5 0 0 1 9.5-1.5M5 10h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1Zm7 4v3" />,
   trash: <path d="M4 7h16M9 7V4h6v3m-8 0 1 13h8l1-13M10 11v5m4-5v5" />,
   userAdd: <path d="M15 19a6 6 0 0 0-12 0M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm9-5v6m-3-3h6" />,
 };

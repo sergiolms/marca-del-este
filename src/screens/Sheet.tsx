@@ -160,39 +160,55 @@ export function SheetScreen() {
       <section class="section">
         <div class="section__header">
           <h2 class="section__title" style="margin:0;flex:0 0 auto">Características</h2>
-          <button class="chip btn-with-icon" onClick={rerollAllStats} aria-label="Generar las seis características con 3d6">
-            <Icon name="d20" />Generar 3d6×6
-          </button>
+          <div style="display:flex;gap:6px;align-items:center">
+            <button
+              class={`chip btn-with-icon stats-lock ${c.statsLocked ? "stats-lock--on" : ""}`}
+              onClick={() => updateActive(cc => ({ ...cc, statsLocked: !cc.statsLocked }))}
+              aria-label={c.statsLocked ? "Desbloquear características" : "Bloquear características"}
+              title={c.statsLocked ? "Características bloqueadas — pulsa para desbloquear" : "Pulsa para bloquear características"}
+            >
+              <Icon name={c.statsLocked ? "lock" : "unlock"} />{c.statsLocked ? "Bloqueado" : "Bloquear"}
+            </button>
+            {!c.statsLocked && (
+              <button class="chip btn-with-icon" onClick={rerollAllStats} aria-label="Generar las seis características con 3d6">
+                <Icon name="d20" />Generar 3d6×6
+              </button>
+            )}
+          </div>
         </div>
         <div class="stats-grid">
           {STAT_ROWS.map(s => {
             const v = c.stats[s.key];
             const m = abilityModifier(v);
             return (
-              <div class="card stat stat--card" key={s.key}>
+              <div class={`card stat stat--card ${c.statsLocked ? "stat--locked" : ""}`} key={s.key}>
                 <span class="stat__label" title={s.full}>{s.label}</span>
-                <input
-                  type="number"
-                  class="stat__value stat__value-input"
-                  value={v}
-                  inputMode="numeric"
-                  min="1"
-                  max="25"
-                  onChange={(e) => {
-                    const n = Math.max(1, Math.min(25, Number((e.currentTarget as HTMLInputElement).value) || 1));
-                    updateActive(cc => ({ ...cc, stats: { ...cc.stats, [s.key]: n } }));
-                  }}
-                  aria-label={s.full}
-                />
+                {c.statsLocked ? (
+                  <span class="stat__value" style="font-size:22px">{v}</span>
+                ) : (
+                  <input
+                    type="number"
+                    class="stat__value stat__value-input"
+                    value={v}
+                    inputMode="numeric"
+                    min="1"
+                    max="25"
+                    onChange={(e) => {
+                      const n = Math.max(1, Math.min(25, Number((e.currentTarget as HTMLInputElement).value) || 1));
+                      updateActive(cc => ({ ...cc, stats: { ...cc.stats, [s.key]: n } }));
+                    }}
+                    aria-label={s.full}
+                  />
+                )}
                 <span class={`stat__mod ${m > 0 ? "stat__mod--plus" : m < 0 ? "stat__mod--minus" : ""}`}>
                   {formatModifier(m)}
-                  <SealButton small onClick={rollStat(s.key, s.label, s.full)} ariaLabel={`Tira 3d6 para ${s.full} y fija el valor`}>3d6</SealButton>
+                  {!c.statsLocked && <SealButton small onClick={rollStat(s.key, s.label, s.full)} ariaLabel={`Tira 3d6 para ${s.full} y fija el valor`}>3d6</SealButton>}
                 </span>
               </div>
             );
           })}
         </div>
-        <div class="hint">Al pulsar <b>3d6</b> en un atributo se lanza y el valor queda fijado.</div>
+        <div class="hint">{c.statsLocked ? "Características bloqueadas. Desbloquea para editar." : <>Al pulsar <b>3d6</b> en un atributo se lanza y el valor queda fijado.</>}</div>
       </section>
 
       <section class="section">

@@ -38,7 +38,7 @@ export function CoinStacks({ wallet }: Props) {
               <div class="coin-col__stack" aria-hidden="true">
                 {piles.map((pile, pileIndex) => {
                   const pileX = pileOffset(pileIndex, piles.length);
-                  const baseY = piles.length * 2;
+                  const baseY = piles.length * 5 + pileIndex * 1.5;
                   const seedBase = c.key.length * 17 + pileIndex * 53;
                   return (
                     <div key={`pile-${pileIndex}`} class={`coin-pile coin-pile--${pileIndex}`} style={`--pile-x:${pileX}px;--pile-y:${baseY}px;--pile-z:${pile.z};`}>

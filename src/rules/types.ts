@@ -164,6 +164,7 @@ export interface Character {
   updatedAt: string;
   character: CharacterIdentity;
   stats: Stats;
+  statsLocked?: boolean;
   saves: Saves;
   combat: Combat;
   money: Wallet;
