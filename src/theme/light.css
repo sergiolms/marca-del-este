@@ -19,6 +19,9 @@ button, input, select, textarea {
   font-family: inherit; color: inherit;
 }
 input, select, textarea { font-size: 16px; }
+button, [role="button"], a, .dock__item, .fan__avatar, .d20, .hp__adjust button {
+  touch-action: manipulation;
+}
 
 .clamp-3 {
   display: -webkit-box;
