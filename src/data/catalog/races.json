@@ -1,0 +1,48 @@
+[
+  {
+    "key": "humano",
+    "name": "Humano",
+    "movement": "30 m. (10 m. en combate; 60 m. corriendo; 15 m. con carga pesada)",
+    "abilities": [
+      "Sin restricciones de clase (puede elegir cualquiera de las clases humanas)",
+      "Sin límite racial de nivel para las clases humanas del rulebook"
+    ],
+    "description": "Raza por defecto. La inmensa mayoría de los aventureros humanos acceden a las clases Clérigo, Explorador, Guerrero, Ladrón, Mago o Paladín (Cap. 2), así como a todas las clases avanzadas no explícitamente raciales. El movimiento está listado en la tabla del capítulo 4 (p. 46)."
+  },
+  {
+    "key": "elfo",
+    "name": "Elfo",
+    "movement": "40 m. (13 m. en combate; 80 m. corriendo; 20 m. con carga pesada)",
+    "abilities": [
+      "Infravisión 20 m",
+      "Detectar puertas secretas o compartimientos ocultos 1-2 en 1d6",
+      "Inmunidad a la parálisis",
+      "Inclinación natural para la magia arcana"
+    ],
+    "description": "Aventuras en la Marca del Este sigue el modelo OSR clásico de clase-como-raza: la raza Elfo se interpreta jugando la clase Elfo (Cap. 2, p. 15) o Elfo oscuro (p. 31). No hay reglas separadas para combinar la raza con otra clase humana. Existen cinco subrazas élficas (altos, grises, silvanos, oscuros y acuáticos); los elfos oscuros son una clase avanzada aparte."
+  },
+  {
+    "key": "enano",
+    "name": "Enano",
+    "movement": "20 m. (7 m. en combate; 40 m. corriendo; 10 m. con carga pesada)",
+    "abilities": [
+      "Infravisión 20 m",
+      "Detectar trampas, muros falsos, pendientes o construcciones ocultas 1-2 en 1d6",
+      "Fuerte voluntad frente a la magia (tiradas de salvación)",
+      "Puede comunicarse a nivel básico con goblins, kobolds, gnomos y orcos"
+    ],
+    "description": "Clase-como-raza: la raza Enano se juega con la clase Enano (Cap. 2, p. 17). Su corta estatura (~1,40 m) impide el uso de armas grandes de dos manos o arcos largos."
+  },
+  {
+    "key": "halfling",
+    "name": "Halfling",
+    "movement": "20 m. (7 m. en combate; 40 m. corriendo; 10 m. con carga pesada)",
+    "abilities": [
+      "Camuflaje en la naturaleza o entre sombras 1-4 en 1d6",
+      "+1 a cualquier tirada de ataque a distancia",
+      "+2 a la CA contra criaturas mayores que un humano",
+      "+1 a la iniciativa por su tamaño"
+    ],
+    "description": "Clase-como-raza: la raza Halfling (también llamados medianos) se juega con la clase Halfling (Cap. 2, p. 20). Existen tres razas principales: sagaces, recios y grandotes. Tamaño reducido (~1 m, 30 kg), no pueden usar armas grandes; las armas medianas deben usarse a dos manos."
+  }
+]

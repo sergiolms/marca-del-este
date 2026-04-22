@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Emblema de La Marca del Este">
+  <rect width="256" height="256" rx="44" fill="#6f231d"/>
+  <path d="M128 23 216 58v62c0 57-35 91-88 113-53-22-88-56-88-113V58l88-35Z" fill="#f4ecd8" stroke="#2a1712" stroke-width="8"/>
+  <path d="M128 42 196 69v50c0 43-25 70-68 90-43-20-68-47-68-90V69l68-27Z" fill="#b1762e"/>
+  <path d="M128 53v143c34-17 53-39 53-76V80l-53-27Z" fill="#8f2e25"/>
+  <path d="M81 91h94v15H81zm13 36h68v15H94zm18 34h32v15h-32z" fill="#fff8e8"/>
+  <path d="M93 82c18-18 52-18 70 0" fill="none" stroke="#fff8e8" stroke-width="10" stroke-linecap="round"/>
+</svg>

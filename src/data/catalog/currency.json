@@ -1,0 +1,9 @@
+{
+  "units": [
+    { "key": "mc", "name": "Moneda de cobre", "copperValue": 1 },
+    { "key": "mp", "name": "Moneda de plata", "copperValue": 10 },
+    { "key": "me", "name": "Moneda de electro", "copperValue": 50 },
+    { "key": "mo", "name": "Moneda de oro", "copperValue": 100 },
+    { "key": "mpt", "name": "Moneda de platino", "copperValue": 1000 }
+  ]
+}

@@ -1,0 +1,65 @@
+:root {
+  /* Paper */
+  --parchment:       #f3e9d2;
+  --parchment-deep:  #e8dcc4;
+  --parchment-dark:  #d8c9a3;
+  --ink:             #231b15;
+  --ink-soft:        #4a3f30;
+  --ink-muted:       #8a7654;
+  --aged-line:       #c4b58f;
+
+  /* Card surface */
+  --card-bg:         #fbf5e3;
+  --card-border:     var(--aged-line);
+  --card-shadow:     0 1px 2px rgba(35,27,21,.10), 0 3px 8px rgba(35,27,21,.10);
+  --card-shadow-lift:0 2px 4px rgba(35,27,21,.14), 0 10px 24px rgba(35,27,21,.22);
+  --card-radius:     14px;
+
+  /* Class accents */
+  --class-guerrero:   #a8372b;
+  --class-mago:       #2b5ea8;
+  --class-clerigo:    #c8a24b;
+  --class-ladron:     #3e6b4a;
+  --class-elfo:       #6b4aa8;
+  --class-enano:      #8c5a2e;
+  --class-halfling:   #6b8a3e;
+  --class-paladin:    #c8a24b;
+  --class-explorador: #3e6b4a;
+  --class-asesino:    #4a4544;
+  --class-barbaro:    #a8372b;
+  --class-bardo:      #c8a24b;
+  --class-druida:     #3e6b4a;
+  --class-gnomo:      #8c5a2e;
+  --class-semielfo:   #6b4aa8;
+  --class-semiorco:   #8c5a2e;
+  --class-elfo-oscuro:#4a2f5c;
+  --class-neutral:    #4a3f30;
+
+  /* State */
+  --success:  #3e6b4a;
+  --success-hot: #4f8a5e;
+  --fail:     #a8372b;
+  --crit:     #e4b04a;
+  --crit-hot: #f5c76e;
+  --fumble:   #4a4544;
+  --burgundy: #7a1f1f;
+
+  /* Coins */
+  --coin-gold:     #d49a36;
+  --coin-silver:   #c4c7ce;
+  --coin-electrum: #c9a56c;
+  --coin-copper:   #c17a4a;
+  --coin-platinum: #e7ecf3;
+
+  /* Motion */
+  --ease-standard: cubic-bezier(.2,.7,.2,1);
+  --ease-impact:   cubic-bezier(.36,.07,.19,.97);
+  --ease-decel:    cubic-bezier(0,.6,.2,1);
+  --fx-short: 120ms;
+  --fx-med:   280ms;
+  --fx-long:  800ms;
+
+  /* Typography */
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-body:    "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}

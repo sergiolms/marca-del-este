@@ -1,0 +1,521 @@
+[
+  {
+    "id": "pocion-curacion",
+    "name": "Poción de curación",
+    "kind": "potion",
+    "cost": "300 mo",
+    "consumable": true,
+    "effect": "Funciona igual que el conjuro homónimo (Curación).",
+    "notes": "Caja Roja, p. 139."
+  },
+  {
+    "id": "pocion-curar-enfermedad",
+    "name": "Poción de curar enfermedad",
+    "kind": "potion",
+    "cost": "750 mo",
+    "consumable": true,
+    "effect": "Funciona igual que el conjuro homónimo (Curar enfermedad).",
+    "notes": "Caja Roja, p. 139."
+  },
+  {
+    "id": "pocion-invisibilidad",
+    "name": "Poción de invisibilidad",
+    "kind": "potion",
+    "cost": "300 mo",
+    "consumable": true,
+    "effect": "Funciona igual que el conjuro homónimo (Invisibilidad).",
+    "notes": "Caja Roja, p. 139."
+  },
+  {
+    "id": "pocion-lentificar-veneno",
+    "name": "Poción de lentificar veneno",
+    "kind": "potion",
+    "cost": "300 mo",
+    "consumable": true,
+    "effect": "Funciona igual que el conjuro homónimo (Lentificar veneno).",
+    "notes": "Caja Roja, p. 139."
+  },
+  {
+    "id": "pocion-levitar",
+    "name": "Poción de levitar",
+    "kind": "potion",
+    "cost": "300 mo",
+    "consumable": true,
+    "effect": "Funciona igual que el conjuro homónimo (Levitar).",
+    "notes": "Caja Roja, p. 139."
+  },
+  {
+    "id": "pocion-quitar-el-miedo",
+    "name": "Poción de quitar el miedo",
+    "kind": "potion",
+    "cost": "50 mo",
+    "consumable": true,
+    "effect": "Funciona igual que el conjuro homónimo (Quitar el miedo).",
+    "notes": "Caja Roja, p. 139."
+  },
+  {
+    "id": "pocion-respirar-bajo-el-agua",
+    "name": "Poción de respirar bajo el agua",
+    "kind": "potion",
+    "cost": "750 mo",
+    "consumable": true,
+    "effect": "Funciona igual que el conjuro homónimo (Respirar bajo el agua).",
+    "notes": "Caja Roja, p. 139."
+  },
+  {
+    "id": "pocion-resurreccion",
+    "name": "Poción de resurrección",
+    "kind": "potion",
+    "cost": "25.000 mo",
+    "consumable": true,
+    "effect": "Funciona igual que el conjuro homónimo (Resurrección).",
+    "notes": "Caja Roja, p. 139."
+  },
+  {
+    "id": "pocion-sanar",
+    "name": "Poción de sanar",
+    "kind": "potion",
+    "cost": "10.000 mo",
+    "consumable": true,
+    "effect": "Funciona igual que el conjuro homónimo (Sanar).",
+    "notes": "Caja Roja, p. 139."
+  },
+  {
+    "id": "pocion-volar",
+    "name": "Poción de volar",
+    "kind": "potion",
+    "cost": "750 mo",
+    "consumable": true,
+    "effect": "Funciona igual que el conjuro homónimo (Volar).",
+    "notes": "Caja Roja, p. 139."
+  },
+  {
+    "id": "anillo-almacenar-conjuros",
+    "name": "Anillo de almacenar conjuros",
+    "kind": "ring",
+    "cost": "50.000 mo",
+    "effect": "Tiene la apariencia de un viejo anillo de cobre. Permite al portador almacenar un máximo de tres conjuros que conozca. No se pueden almacenar dos conjuros del mismo nivel; así a nivel 1 sólo se podría almacenar un conjuro de nivel 1, y a nivel 5 un conjuro de nivel 1, otro de nivel 2 y un tercero de nivel 3.",
+    "notes": "Caja Roja, p. 135."
+  },
+  {
+    "id": "anillo-caida-de-pluma",
+    "name": "Anillo de caída de pluma",
+    "kind": "ring",
+    "cost": "2.200 mo",
+    "effect": "Parece un anillo de oro normal. En la parte interior tiene grabadas tres plumas. Permite al portador, en caso de caída desde una altura superior a dos metros y pronunciando la palabra de mando, caer como si fuera una pluma y evitar todo el daño que pudiera sufrir por la caída.",
+    "notes": "Caja Roja, p. 135."
+  },
+  {
+    "id": "anillo-comandar-elementales-de-agua",
+    "name": "Anillo de comandar elementales de agua",
+    "kind": "ring",
+    "cost": "200.000 mo",
+    "usesPerDay": 1,
+    "effect": "Anillo forjado en un extraño metal azul. Usando la palabra de mando adecuada, permite al portador convocar un elemental de agua una vez al día, con las características del capítulo de monstruos. El elemental permanecerá hasta que se vea reducido a 0 pg o hasta que el portador pronuncie de nuevo la palabra de mando y lo devuelva a su plano.",
+    "notes": "Caja Roja, p. 135."
+  },
+  {
+    "id": "anillo-invisibilidad",
+    "name": "Anillo de invisibilidad",
+    "kind": "ring",
+    "cost": "20.000 mo",
+    "usesPerDay": 3,
+    "effect": "Aparentemente es un anillo de plata convencional. Permite al portador volverse invisible como si se tratara del conjuro de mismo nombre, hasta un máximo de tres veces diarias.",
+    "notes": "Caja Roja, p. 135."
+  },
+  {
+    "id": "anillo-nadar",
+    "name": "Anillo de nadar",
+    "kind": "ring",
+    "cost": "2.500 mo",
+    "effect": "Anillo de coral que permite al portador nadar sin tener en cuenta el peso de su equipo, sin fatigarse, y sin importar que el portador no sepa nadar.",
+    "notes": "Caja Roja, p. 135."
+  },
+  {
+    "id": "anillo-proteccion-1",
+    "name": "Anillo de protección +1",
+    "kind": "ring",
+    "cost": "2.000 mo",
+    "effect": "Tiene la apariencia de un simple anillo de oro. Concede al portador un bonificador de mejora de armadura de -1.",
+    "notes": "Caja Roja, p. 135."
+  },
+  {
+    "id": "anillo-proteccion-2",
+    "name": "Anillo de protección +2",
+    "kind": "ring",
+    "cost": "8.000 mo",
+    "effect": "Tiene la apariencia de un simple anillo de oro. Concede al portador un bonificador de mejora de armadura de -2.",
+    "notes": "Caja Roja, p. 135."
+  },
+  {
+    "id": "anillo-proteccion-3",
+    "name": "Anillo de protección +3",
+    "kind": "ring",
+    "cost": "18.000 mo",
+    "effect": "Tiene la apariencia de un simple anillo de oro. Concede al portador un bonificador de mejora de armadura de -3.",
+    "notes": "Caja Roja, p. 135."
+  },
+  {
+    "id": "anillo-resistencia-a-los-elementos",
+    "name": "Anillo de resistencia a los elementos",
+    "kind": "ring",
+    "cost": "44.000 mo",
+    "effect": "Existen cinco tipos (fuego, frío, electricidad, ácido o sonido). Confieren al portador resistencia de 20 puntos de golpe contra el daño causado por el tipo de energía correspondiente; el daño que supere esa cantidad se recibe normalmente.",
+    "notes": "Caja Roja, p. 135. El tipo de elemento se elige al descubrirlo."
+  },
+  {
+    "id": "anillo-tres-deseos",
+    "name": "Anillo de los tres deseos",
+    "kind": "ring",
+    "cost": "97.950 mo",
+    "charges": 3,
+    "maxCharges": 3,
+    "effect": "Forjado en platino y con tres rubíes incrustados. Concede al portador tres deseos con las limitaciones propias del conjuro de mismo nombre. Cada vez que se pide un conjuro, uno de los rubíes es consumido y desaparece.",
+    "notes": "Caja Roja, p. 135."
+  },
+  {
+    "id": "cetro-de-gobierno",
+    "name": "Cetro de gobierno",
+    "kind": "rod",
+    "cost": "60.000 mo",
+    "effect": "De apariencia magnífica; sólo los materiales con los que está fabricado valen 5.000 mo. Permite al portador obtener la obediencia y lealtad de todas las criaturas en un radio de 100 m. Todas las criaturas tienen derecho a una tirada de salvación contra conjuros; quienes no la superen verán al portador como su gobernante, pero no seguirán órdenes contrarias a su alineamiento. Puede usarse durante 10 horas antes de descargarse.",
+    "notes": "Caja Roja, p. 136."
+  },
+  {
+    "id": "cetro-de-las-maravillas",
+    "name": "Cetro de las maravillas",
+    "kind": "rod",
+    "cost": "12.000 mo",
+    "effect": "Cetro sencillo, de aspecto de un trozo de metal mal forjado. Al usarse desencadena un efecto aleatorio: 1-20% inmoviliza a la criatura señalada 10 asaltos (salvación vs conjuros anula); 21-40% Rayo eléctrico sobre la criatura señalada 6d6 pg (salvación para mitad); 41-60% el portador se vuelve invisible; 61-80% Bola de fuego 6d6 en radio de 3 m (salvación para mitad); 81-100% la criatura se vuelve azul y queda confusa 3 asaltos (-2 a armadura y ataque).",
+    "notes": "Caja Roja, p. 136."
+  },
+  {
+    "id": "cetro-de-truenos-y-relampagos",
+    "name": "Cetro de truenos y relámpagos",
+    "kind": "rod",
+    "cost": "33.000 mo",
+    "usesPerDay": 2,
+    "effect": "Aleación de hierro y plata. Puede usarse como maza ligera +2. Trueno (1/día): golpea como maza ligera +3 y si acierta deja sordo al oponente durante 3 asaltos. Relámpago (1/día): cuando el cetro golpea con éxito, puede causar 3d6 pg adicionales por electricidad.",
+    "notes": "Caja Roja, p. 136."
+  },
+  {
+    "id": "pergamino-nivel-1",
+    "name": "Pergamino (nivel 1)",
+    "kind": "scroll",
+    "cost": "50 mo",
+    "consumable": true,
+    "effect": "Permite lanzar un conjuro inscrito de nivel 1 sin gastarlo de la memoria. El valor es orientativo, a discreción del Narrador.",
+    "notes": "Caja Roja, p. 139."
+  },
+  {
+    "id": "pergamino-nivel-2",
+    "name": "Pergamino (nivel 2)",
+    "kind": "scroll",
+    "cost": "200 mo",
+    "consumable": true,
+    "effect": "Permite lanzar un conjuro inscrito de nivel 2 sin gastarlo de la memoria.",
+    "notes": "Caja Roja, p. 139."
+  },
+  {
+    "id": "pergamino-nivel-3",
+    "name": "Pergamino (nivel 3)",
+    "kind": "scroll",
+    "cost": "400 mo",
+    "consumable": true,
+    "effect": "Permite lanzar un conjuro inscrito de nivel 3 sin gastarlo de la memoria.",
+    "notes": "Caja Roja, p. 139."
+  },
+  {
+    "id": "pergamino-nivel-4",
+    "name": "Pergamino (nivel 4)",
+    "kind": "scroll",
+    "cost": "800 mo",
+    "consumable": true,
+    "effect": "Permite lanzar un conjuro inscrito de nivel 4 sin gastarlo de la memoria.",
+    "notes": "Caja Roja, p. 139."
+  },
+  {
+    "id": "pergamino-nivel-5",
+    "name": "Pergamino (nivel 5)",
+    "kind": "scroll",
+    "cost": "1.500 mo",
+    "consumable": true,
+    "effect": "Permite lanzar un conjuro inscrito de nivel 5 sin gastarlo de la memoria.",
+    "notes": "Caja Roja, p. 139."
+  },
+  {
+    "id": "pergamino-nivel-6",
+    "name": "Pergamino (nivel 6)",
+    "kind": "scroll",
+    "cost": "2.500 mo",
+    "consumable": true,
+    "effect": "Permite lanzar un conjuro inscrito de nivel 6 sin gastarlo de la memoria.",
+    "notes": "Caja Roja, p. 139."
+  },
+  {
+    "id": "pergamino-nivel-7",
+    "name": "Pergamino (nivel 7)",
+    "kind": "scroll",
+    "cost": "4.000 mo",
+    "consumable": true,
+    "effect": "Permite lanzar un conjuro inscrito de nivel 7 sin gastarlo de la memoria.",
+    "notes": "Caja Roja, p. 139."
+  },
+  {
+    "id": "pergamino-nivel-8",
+    "name": "Pergamino (nivel 8)",
+    "kind": "scroll",
+    "cost": "6.000 mo",
+    "consumable": true,
+    "effect": "Permite lanzar un conjuro inscrito de nivel 8 sin gastarlo de la memoria.",
+    "notes": "Caja Roja, p. 139."
+  },
+  {
+    "id": "pergamino-nivel-9",
+    "name": "Pergamino (nivel 9)",
+    "kind": "scroll",
+    "cost": "9.000 mo",
+    "consumable": true,
+    "effect": "Permite lanzar un conjuro inscrito de nivel 9 sin gastarlo de la memoria.",
+    "notes": "Caja Roja, p. 139."
+  },
+  {
+    "id": "pergamino-resurreccion",
+    "name": "Pergamino de resurrección",
+    "kind": "scroll",
+    "cost": "25.000 mo",
+    "consumable": true,
+    "effect": "Permite lanzar el conjuro de Resurrección inscrito en el pergamino sin gastarlo de la memoria.",
+    "notes": "Caja Roja, p. 139."
+  },
+  {
+    "id": "pergamino-deseo",
+    "name": "Pergamino de deseo",
+    "kind": "scroll",
+    "cost": "50.000 mo",
+    "consumable": true,
+    "effect": "Permite lanzar el conjuro de Deseo inscrito en el pergamino sin gastarlo de la memoria.",
+    "notes": "Caja Roja, p. 139."
+  },
+  {
+    "id": "baston-de-defensa",
+    "name": "Bastón de defensa",
+    "kind": "staff",
+    "cost": "58.250 mo",
+    "effect": "Fabricado en madera de roble muy resistente. Concede al portador, como si fueran lanzados por un conjurador de nivel 12: Escudo (1 carga), Muro de piedra (1 carga), Escudo protector contra la magia (3 cargas). Cuando el portador lleva el bastón en una de sus manos concede además un bonificador de armadura de -2.",
+    "notes": "Caja Roja, p. 136. Cargas totales a discreción del Narrador."
+  },
+  {
+    "id": "baston-de-luz",
+    "name": "Bastón de luz",
+    "kind": "staff",
+    "cost": "48.250 mo",
+    "effect": "Bastón de madera chapado en platino, con incrustaciones de oro que representan soles llameantes. Concede al portador, como si fueran lanzados por un conjurador de nivel 8: Luz permanente (1 carga), Luz (1 carga), Disipar magia (3 cargas). Si se usa como arma, causa el doble de daño contra muertos vivientes y criaturas afectadas por la luz solar, y concede +1 al ataque.",
+    "notes": "Caja Roja, p. 136."
+  },
+  {
+    "id": "baston-de-poder",
+    "name": "Bastón de poder",
+    "kind": "staff",
+    "cost": "211.000 mo",
+    "effect": "Bastón forjado de mitral, con incrustaciones de oro y plata y un diamante en su parte superior. Concede al portador, como si fueran lanzados por un conjurador de nivel 15: Proyectil mágico (1 carga), Levitar (1 carga), Rayo eléctrico (1 carga), Bola de fuego (2 cargas) y Resistencia al frío (3 cargas). Además el portador gana +2 a todas sus tiradas de salvación y +3 al ataque si se usa como arma.",
+    "notes": "Caja Roja, p. 136."
+  },
+  {
+    "id": "varita-de-curacion",
+    "name": "Varita de curación",
+    "kind": "wand",
+    "cost": "21.000 mo",
+    "effect": "Cada uso de la varita permite al lanzador curar 3d6 pg a la criatura seleccionada.",
+    "notes": "Caja Roja, p. 136. Cargas máximas a discreción del Narrador."
+  },
+  {
+    "id": "varita-de-inmovilizar-persona",
+    "name": "Varita de inmovilizar persona",
+    "kind": "wand",
+    "cost": "4.500 mo",
+    "effect": "Cada uso de la varita lanza sobre la criatura designada por el portador un conjuro de Inmovilizar persona, como si lo hubiera lanzado un mago de nivel 7.",
+    "notes": "Caja Roja, p. 136-137."
+  },
+  {
+    "id": "varita-de-proyectiles-magicos",
+    "name": "Varita de proyectiles mágicos",
+    "kind": "wand",
+    "cost": "6.750 mo",
+    "effect": "La varita lanza sobre la criatura designada por el portador un conjuro de Proyectil mágico, como si lo hubiera lanzado un mago de nivel 12.",
+    "notes": "Caja Roja, p. 137."
+  },
+  {
+    "id": "varita-de-rayo-relampagueante",
+    "name": "Varita de rayo relampagueante",
+    "kind": "wand",
+    "cost": "13.500 mo",
+    "effect": "Cada uso de la varita proyecta contra la criatura designada por el portador un conjuro de Rayo eléctrico, como si lo hubiera lanzado un mago de nivel 15.",
+    "notes": "Caja Roja, p. 137."
+  },
+  {
+    "id": "botas-elficas",
+    "name": "Botas élficas",
+    "kind": "wondrous",
+    "cost": "12.000 mo",
+    "usesPerDay": 3,
+    "effect": "Botas de manufactura élfica y aspecto normal. Permiten al portador moverse tres veces al día al triple de su capacidad de movimiento.",
+    "notes": "Caja Roja, p. 137."
+  },
+  {
+    "id": "bote-plegable",
+    "name": "Bote plegable",
+    "kind": "wondrous",
+    "cost": "7.200 mo",
+    "effect": "Parece una pequeña caja de madera. Con una palabra de mando se transforma en un bote de 3 x 1 x 1 m con remos, ancla, vela y mástil (5 ocupantes, 3 m/asalto). Con otra palabra se convierte en una barcaza de 10 x 3 x 2 m con cubierta, 6 remos, ancla, cabina, mástil y vela (hasta 15 ocupantes). Una tercera palabra lo devuelve a su tamaño original.",
+    "notes": "Caja Roja, p. 137."
+  },
+  {
+    "id": "brasero-de-elementales-de-fuego",
+    "name": "Brasero de elementales de fuego",
+    "kind": "wondrous",
+    "cost": "100.000 mo",
+    "usesPerDay": 1,
+    "effect": "Brasero de aspecto normal. Una vez encendido, si se vierte sobre él un poco de azufre, aparece un elemental de fuego que obedece al portador. El elemental permanece hasta que sus pg se reduzcan a 0 o se extingan las brasas. Se puede convocar un elemental al día.",
+    "notes": "Caja Roja, p. 137."
+  },
+  {
+    "id": "brazales-4",
+    "name": "Brazales +4",
+    "kind": "wondrous",
+    "cost": "16.000 mo",
+    "effect": "Aspecto de brazaletes ornamentales. Conceden al portador un -4 a la CA. Este beneficio no es aplicable si el aventurero lleva armadura.",
+    "notes": "Caja Roja, p. 137."
+  },
+  {
+    "id": "brazales-8",
+    "name": "Brazales +8",
+    "kind": "wondrous",
+    "cost": "64.000 mo",
+    "effect": "Igual que los brazales +4, pero conceden un bonificador de -8 a la CA. No aplicable si el aventurero lleva armadura.",
+    "notes": "Caja Roja, p. 137."
+  },
+  {
+    "id": "carcaj-de-esmeril",
+    "name": "Carcaj de Esmeril",
+    "kind": "wondrous",
+    "cost": "1.800 mo",
+    "effect": "Parece un carcaj de flechas convencional. Una vez que se mete dentro una sola flecha, se podrán sacar infinitas flechas de su interior. Si la flecha introducida fuera mágica, sólo saldría la primera vez; el resto serían flechas normales.",
+    "notes": "Caja Roja, p. 138."
+  },
+  {
+    "id": "cuerda-de-enmaranar",
+    "name": "Cuerda de enmarañar",
+    "kind": "wondrous",
+    "cost": "21.000 mo",
+    "effect": "Parece una cuerda de cáñamo normal de 12 m. A una orden del portador, la cuerda se lanza hacia la víctima y trata de enmarañarla como si se tratara del conjuro de Telaraña lanzado por un mago de nivel 12.",
+    "notes": "Caja Roja, p. 138 (descrita como \"Cuerda de telaraña\" en el texto)."
+  },
+  {
+    "id": "diadema-de-intelecto",
+    "name": "Diadema de intelecto",
+    "kind": "wondrous",
+    "cost": "4.000 mo",
+    "effect": "Cadena fina de joyería con una gema incrustada que se usa como diadema. Una vez puesta, el portador mejora su puntuación de Inteligencia en +2.",
+    "notes": "Caja Roja, p. 138."
+  },
+  {
+    "id": "figurita-de-maravilloso-poder",
+    "name": "Figurita de maravilloso poder",
+    "kind": "wondrous",
+    "cost": "20.000 mo",
+    "usesPerDay": 1,
+    "effect": "Estatuilla de ~30 cm. Al lanzarla con la palabra de mando se convierte en el animal que representa durante 1 hora, una vez al día. Leones de marfil: aparecen en pareja como leones machos adultos. Perro de arcilla: perro de monta con inteligencia y visión en la oscuridad, comunica con su amo. Si la figurita muere en combate, no podrá ser convocada durante cinco días.",
+    "notes": "Caja Roja, p. 138."
+  },
+  {
+    "id": "gafas-de-noche",
+    "name": "Gafas de noche",
+    "kind": "wondrous",
+    "cost": "12.000 mo",
+    "effect": "Dos lentes oscuras con montura de cobre. Cuando se utilizan, conceden al portador visión en la oscuridad con un alcance de 20 metros.",
+    "notes": "Caja Roja, p. 138."
+  },
+  {
+    "id": "guanteletes-de-destreza",
+    "name": "Guanteletes de destreza",
+    "kind": "wondrous",
+    "cost": "4.000 mo",
+    "effect": "De excelente manufactura y fabricados de cuero fino. Obsequian al portador con un +2 a la puntuación de DES.",
+    "notes": "Caja Roja, p. 138."
+  },
+  {
+    "id": "guanteletes-de-fuerza",
+    "name": "Guanteletes de fuerza",
+    "kind": "wondrous",
+    "cost": "4.000 mo",
+    "effect": "Aspecto rudimentario de cuero duro con algunos remaches de metal. Conceden al portador un +2 a la FUE.",
+    "notes": "Caja Roja, p. 138."
+  },
+  {
+    "id": "piedra-de-la-buena-suerte",
+    "name": "Piedra de la buena suerte",
+    "kind": "wondrous",
+    "cost": "20.000 mo",
+    "usesPerDay": 1,
+    "effect": "Piedra de obsidiana perfectamente pulida. Concede al portador un +1 a todas sus tiradas de salvación. Una vez al día permite al portador repetir una tirada de salvación de su elección; la segunda tirada es definitiva aunque el resultado sea peor que el de la primera.",
+    "notes": "Caja Roja, p. 138."
+  },
+  {
+    "id": "presea-de-sabiduria",
+    "name": "Presea de sabiduría",
+    "kind": "wondrous",
+    "cost": "4.000 mo",
+    "effect": "Medallón con una cadena y una perla incrustada. Una vez puesta concede un bonificador de +2 a la Sabiduría.",
+    "notes": "Caja Roja, p. 138."
+  },
+  {
+    "id": "saco-de-fistan",
+    "name": "Saco de Fistan",
+    "kind": "wondrous",
+    "cost": "2.000 mo",
+    "effect": "Bolsa de cuero endurecido y encerado. Guarda en su interior un espacio dimensional enorme que permite alojar hasta 500 kg. El saco nunca supera los 30 kg de peso externo, independientemente de la carga.",
+    "notes": "Caja Roja, p. 138."
+  },
+  {
+    "id": "toga-de-resistencia-a-conjuros",
+    "name": "Toga de resistencia a conjuros",
+    "kind": "wondrous",
+    "cost": "90.000 mo",
+    "effect": "Realizada de tejido grueso y color rojo. Se lleva por encima de la armadura o la vestimenta normal. Concede al portador un +4 a sus tiradas de salvación contra conjuros.",
+    "notes": "Caja Roja, p. 138."
+  },
+  {
+    "id": "tunica-de-archimago",
+    "name": "Túnica de archimago",
+    "kind": "wondrous",
+    "cost": "75.000 mo",
+    "effect": "Blanca (legal), gris (neutral) o negra (caótico). Si el alineamiento del portador difiere del de la túnica, sufre tres niveles negativos. Si coincide y el portador es mago o elfo, concede: bonificador de -5 a la CA; un conjuro adicional por nivel a la lista de conjuros diarios; +4 a todas las tiradas de salvación.",
+    "notes": "Caja Roja, p. 139."
+  },
+  {
+    "id": "tunica-de-colores-hipnoticos",
+    "name": "Túnica de colores hipnóticos",
+    "kind": "wondrous",
+    "cost": "27.000 mo",
+    "effect": "Aparece en la tabla de precios del VALOR MAGIA, pero no figura descrita en el capítulo 8 de la Caja Roja. Usar como túnica que produce un efecto hipnótico similar al conjuro Pauta hipnótica sobre quienes la contemplen.",
+    "notes": "Caja Roja, p. 137 (tabla). Descripción faltante en el rulebook; anotar como TODO."
+  },
+  {
+    "id": "tunica-de-huesos",
+    "name": "Túnica de huesos",
+    "kind": "wondrous",
+    "cost": "TODO",
+    "effect": "Túnica negra que parece normal; sólo el portador ve los bordados de muertos vivientes. Cada asalto el portador puede despegar uno de los bordados y lanzarlo: automáticamente se convierte en el muerto viviente que representa y actúa bajo las órdenes del portador. Cuando la túnica se queda sin bordados pasa a ser normal. Muertos vivientes posibles: esqueleto, zombi, sombra, momia, necrófago.",
+    "notes": "Caja Roja, p. 139. No figura precio en el screenshot VALOR MAGIA; TODO verificar coste."
+  },
+  {
+    "id": "yelmo-de-teletransporte",
+    "name": "Yelmo de teletransporte",
+    "kind": "wondrous",
+    "cost": "73.500 mo",
+    "usesPerDay": 2,
+    "effect": "Parece un yelmo viejo, abollado y oxidado. Concede al portador la capacidad de teleportarse dos veces al día como si hubiera lanzado el conjuro de mismo nombre.",
+    "notes": "Caja Roja, p. 139."
+  }
+]

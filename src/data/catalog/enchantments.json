@@ -1,0 +1,197 @@
+[
+  {
+    "id": "afilada",
+    "name": "Afilada",
+    "appliesTo": ["weapon"],
+    "costDelta": "2.000 mo",
+    "effect": "En ocasiones es conveniente amolar un arma, especialmente las de filo cortante, para que no pierdan sus cualidades ofensivas. A discreción del Narrador, éste podría aplicar algún tipo de penalizador si un aventurero descuidara su equipo.",
+    "stackable": true,
+    "notes": "Caja Roja, p. 134. Cuenta como +1 a efectos del bonificador máximo de +5."
+  },
+  {
+    "id": "arma-1",
+    "name": "+1",
+    "appliesTo": ["weapon"],
+    "bonus": 1,
+    "costDelta": "2.000 mo",
+    "effect": "Bonificador mágico de +1 a las tiradas de ataque y daño. Aplicable a cualquier tipo de arma convencional.",
+    "stackable": true,
+    "notes": "Caja Roja, p. 134."
+  },
+  {
+    "id": "arma-2",
+    "name": "+2",
+    "appliesTo": ["weapon"],
+    "bonus": 2,
+    "costDelta": "10.000 mo",
+    "effect": "Bonificador mágico de +2 a las tiradas de ataque y daño. Aplicable a cualquier tipo de arma convencional.",
+    "stackable": true,
+    "notes": "Caja Roja, p. 134."
+  },
+  {
+    "id": "arma-3",
+    "name": "+3",
+    "appliesTo": ["weapon"],
+    "bonus": 3,
+    "costDelta": "20.000 mo",
+    "effect": "Bonificador mágico de +3 a las tiradas de ataque y daño. Aplicable a cualquier tipo de arma convencional.",
+    "stackable": true,
+    "notes": "Caja Roja, p. 134."
+  },
+  {
+    "id": "arma-4",
+    "name": "+4",
+    "appliesTo": ["weapon"],
+    "bonus": 4,
+    "costDelta": "40.000 mo",
+    "effect": "Bonificador mágico de +4 a las tiradas de ataque y daño. Aplicable a cualquier tipo de arma convencional.",
+    "stackable": true,
+    "notes": "Caja Roja, p. 134."
+  },
+  {
+    "id": "arma-5",
+    "name": "+5",
+    "appliesTo": ["weapon"],
+    "bonus": 5,
+    "costDelta": "80.000 mo",
+    "effect": "Bonificador mágico de +5 a las tiradas de ataque y daño. Aplicable a cualquier tipo de arma convencional.",
+    "stackable": true,
+    "notes": "Caja Roja, p. 134. Máximo permitido por el reglamento."
+  },
+  {
+    "id": "defensiva",
+    "name": "Defensiva",
+    "appliesTo": ["weapon"],
+    "costDelta": "40.000 mo",
+    "effect": "Un arma con esta característica concede un bonificador de -2 a la categoría de armadura del portador.",
+    "stackable": false,
+    "notes": "Caja Roja, p. 134. Cuenta como +1 a efectos del bonificador máximo de +5."
+  },
+  {
+    "id": "detectar-muertos-vivientes",
+    "name": "Detectar muertos vivientes",
+    "appliesTo": ["weapon"],
+    "costDelta": "20.000 mo",
+    "effect": "Un arma con esta habilidad se ilumina cuando hay algún muerto viviente en un radio de 20 metros a su alrededor.",
+    "stackable": false,
+    "notes": "Caja Roja, p. 134. Cuenta como +1 a efectos del bonificador máximo de +5."
+  },
+  {
+    "id": "luz",
+    "name": "Luz",
+    "appliesTo": ["weapon"],
+    "costDelta": "10.000 mo",
+    "effect": "El arma ilumina como si estuviera bajo los efectos del conjuro del mismo nombre.",
+    "stackable": false,
+    "notes": "Caja Roja, p. 134. Cuenta como +1 a efectos del bonificador máximo de +5."
+  },
+  {
+    "id": "vorpalina",
+    "name": "Vorpalina",
+    "appliesTo": ["weapon"],
+    "costDelta": "80.000 mo",
+    "effect": "Un arma vorpalina dobla el rango de tiradas para un crítico: si el aventurero saca un 19 o un 20 en la tirada de ataque, consigue un golpe crítico automático. Además debe volver a lanzar 1d20 y, si obtiene 19 o 20, corta la cabeza de la criatura enfrentada y la mata en el acto.",
+    "stackable": false,
+    "notes": "Caja Roja, p. 134. Cuenta como +1 a efectos del bonificador máximo de +5 (ej. espada vorpalina + espada +4 = 120.000 mo)."
+  },
+  {
+    "id": "armadura-1",
+    "name": "+1",
+    "appliesTo": ["armor"],
+    "bonus": 1,
+    "costDelta": "2.000 mo",
+    "effect": "Armadura mágica con bonificador de +1 (mejora la CA en -1 en el sistema descendente).",
+    "stackable": true,
+    "notes": "Caja Roja, p. 134."
+  },
+  {
+    "id": "armadura-2",
+    "name": "+2",
+    "appliesTo": ["armor"],
+    "bonus": 2,
+    "costDelta": "6.000 mo",
+    "effect": "Armadura mágica con bonificador de +2 (mejora la CA en -2 en el sistema descendente).",
+    "stackable": true,
+    "notes": "Caja Roja, p. 134."
+  },
+  {
+    "id": "armadura-3",
+    "name": "+3",
+    "appliesTo": ["armor"],
+    "bonus": 3,
+    "costDelta": "12.000 mo",
+    "effect": "Armadura mágica con bonificador de +3 (mejora la CA en -3 en el sistema descendente).",
+    "stackable": true,
+    "notes": "Caja Roja, p. 134."
+  },
+  {
+    "id": "armadura-4",
+    "name": "+4",
+    "appliesTo": ["armor"],
+    "bonus": 4,
+    "costDelta": "24.000 mo",
+    "effect": "Armadura mágica con bonificador de +4 (mejora la CA en -4 en el sistema descendente).",
+    "stackable": true,
+    "notes": "Caja Roja, p. 134."
+  },
+  {
+    "id": "armadura-5",
+    "name": "+5",
+    "appliesTo": ["armor"],
+    "bonus": 5,
+    "costDelta": "48.000 mo",
+    "effect": "Armadura mágica con bonificador de +5 (mejora la CA en -5 en el sistema descendente).",
+    "stackable": true,
+    "notes": "Caja Roja, p. 134. Máximo permitido por el reglamento."
+  },
+  {
+    "id": "escudo-1",
+    "name": "+1",
+    "appliesTo": ["shield"],
+    "bonus": 1,
+    "costDelta": "2.000 mo",
+    "effect": "Escudo mágico con bonificador de +1 (mejora la CA en -1 adicional en el sistema descendente).",
+    "stackable": true,
+    "notes": "Caja Roja, p. 134."
+  },
+  {
+    "id": "escudo-2",
+    "name": "+2",
+    "appliesTo": ["shield"],
+    "bonus": 2,
+    "costDelta": "6.000 mo",
+    "effect": "Escudo mágico con bonificador de +2 (mejora la CA en -2 adicional en el sistema descendente).",
+    "stackable": true,
+    "notes": "Caja Roja, p. 134."
+  },
+  {
+    "id": "escudo-3",
+    "name": "+3",
+    "appliesTo": ["shield"],
+    "bonus": 3,
+    "costDelta": "12.000 mo",
+    "effect": "Escudo mágico con bonificador de +3 (mejora la CA en -3 adicional en el sistema descendente).",
+    "stackable": true,
+    "notes": "Caja Roja, p. 134."
+  },
+  {
+    "id": "escudo-4",
+    "name": "+4",
+    "appliesTo": ["shield"],
+    "bonus": 4,
+    "costDelta": "24.000 mo",
+    "effect": "Escudo mágico con bonificador de +4 (mejora la CA en -4 adicional en el sistema descendente).",
+    "stackable": true,
+    "notes": "Caja Roja, p. 134."
+  },
+  {
+    "id": "escudo-5",
+    "name": "+5",
+    "appliesTo": ["shield"],
+    "bonus": 5,
+    "costDelta": "48.000 mo",
+    "effect": "Escudo mágico con bonificador de +5 (mejora la CA en -5 adicional en el sistema descendente).",
+    "stackable": true,
+    "notes": "Caja Roja, p. 134. Máximo permitido por el reglamento."
+  }
+]

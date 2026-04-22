@@ -1,0 +1,29 @@
+node_modules/
+dist/
+.venv/
+.DS_Store
+*.log
+.env
+.env.local
+.vite/
+coverage/
+playwright-report/
+test-results/
+source/out/
+# Large source materials (user-owned, kept locally, not in git)
+source/*.pdf
+source/*.jpeg
+source/*.jpg
+source/*.png
+# tsc emitted artifacts (noEmit: true, but keep guard)
+src/**/*.js
+src/**/*.jsx
+scripts/**/*.js
+!scripts/*.js
+tsconfig.tsbuildinfo
+HANDOFF.md
+docs/*
+old/
+mocks/*
+src/**/*.md
+scripts/*

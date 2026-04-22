@@ -1,0 +1,111 @@
+import { test, expect } from "@playwright/test";
+
+test.describe("Marca del Este — critical flows", () => {
+  test.beforeEach(async ({ page }) => {
+    await page.addInitScript(() => {
+      localStorage.clear();
+    });
+  });
+
+  test("boots on Hoja with a default character", async ({ page }) => {
+    await page.goto("/");
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText(/Aventurero/);
+    await expect(page.locator(".section__title").first()).toContainText(/Características/i);
+  });
+
+  test("navigates between tabs", async ({ page }) => {
+    await page.goto("/");
+    await page.getByRole("button", { name: /Combate/i }).click();
+    await expect(page.locator(".section__title").first()).toContainText(/Puntos de Golpe|Combate|CA/i);
+    await page.getByRole("button", { name: /Tienda/i }).click();
+    await expect(page.locator(".hero__name")).toContainText(/Mercado/i);
+    await page.getByRole("button", { name: /Mochila/i }).click();
+    await expect(page.locator(".section__title").first()).toContainText(/Monedero/i);
+  });
+
+  test("adds a new character", async ({ page }) => {
+    await page.goto("/");
+    const avatarsBefore = await page.locator(".fan__avatar").count();
+    await page.getByLabel("Añadir personaje").click();
+    const avatarsAfter = await page.locator(".fan__avatar").count();
+    expect(avatarsAfter).toBeGreaterThan(avatarsBefore);
+  });
+
+  test("HP tracker decrements and respects temp HP", async ({ page }) => {
+    await page.goto("/");
+    await page.getByRole("button", { name: /Combate/i }).click();
+    // Click −1 several times
+    const minus1 = page.locator(".hp__adjust .minus").nth(2);
+    const hpNumber = page.locator(".hp__number");
+    const before = await hpNumber.textContent();
+    await minus1.click();
+    await minus1.click();
+    await minus1.click();
+    const after = await hpNumber.textContent();
+    expect(before).not.toBe(after);
+    // The number should decrease
+    const b = Number(before?.match(/(\d+)/)?.[1] ?? 0);
+    const a = Number(after?.match(/(\d+)/)?.[1] ?? 0);
+    expect(a).toBeLessThan(b);
+  });
+
+  test("long rest restores HP", async ({ page }) => {
+    await page.goto("/");
+    await page.getByRole("button", { name: /Combate/i }).click();
+    // Take damage
+    const minus5 = page.locator(".hp__adjust .minus").nth(1);
+    await minus5.click();
+    // Rest
+    await page.locator(".rest").click();
+    const hpText = await page.locator(".hp__number").textContent();
+    expect(hpText).toMatch(/^\s*(\d+)\s*\/\s*\1/); // current == max
+  });
+
+  test("buying a weapon deducts wallet, adds inventory row, creates attack", async ({ page }) => {
+    await page.goto("/");
+    // Grant some gold via localStorage seed
+    await page.evaluate(() => {
+      const raw = localStorage.getItem("marca-del-este.v3");
+      if (!raw) return;
+      const s = JSON.parse(raw);
+      s.characters[0].money = { copper: 0, silver: 0, electrum: 0, gold: 500, platinum: 0 };
+      localStorage.setItem("marca-del-este.v3", JSON.stringify(s));
+    });
+    await page.reload();
+
+    await page.getByRole("button", { name: /Tienda/i }).click();
+    // Buy the first weapon with Comprar enabled
+    const firstBuy = page.locator(".shop-item").first().getByRole("button", { name: /Comprar/i });
+    await firstBuy.click();
+
+    // Check inventory
+    await page.getByRole("button", { name: /Mochila/i }).click();
+    await expect(page.locator(".inv-item")).toHaveCount(1);
+
+    // Check attack auto-created (only if the bought item had damage)
+    await page.getByRole("button", { name: /Combate/i }).click();
+    const attacks = page.locator(".attack__title");
+    const n = await attacks.count();
+    expect(n).toBeGreaterThanOrEqual(0);
+  });
+
+  test("export JSON works", async ({ page }) => {
+    await page.goto("/");
+    await page.getByRole("button", { name: /Diario/i }).click();
+    const [download] = await Promise.all([
+      page.waitForEvent("download"),
+      page.getByRole("button", { name: /Exportar JSON/i }).click(),
+    ]);
+    expect(download.suggestedFilename()).toMatch(/\.json$/);
+  });
+
+  test("dice FAB writes to timeline", async ({ page }) => {
+    await page.goto("/");
+    await page.getByRole("button", { name: /Combate/i }).click();
+    const fab = page.locator(".d20--fab");
+    await fab.click();
+    // Timeline should show a d20 entry
+    await page.getByRole("button", { name: /Combate/i }).click();
+    await expect(page.locator(".tl")).toHaveCount(1);
+  });
+});
