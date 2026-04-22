@@ -1,18 +1,18 @@
 :root {
-  /* Paper */
-  --parchment:       #f3e9d2;
-  --parchment-deep:  #e8dcc4;
-  --parchment-dark:  #d8c9a3;
-  --ink:             #231b15;
-  --ink-soft:        #4a3f30;
-  --ink-muted:       #8a7654;
-  --aged-line:       #c4b58f;
+  /* Paper — aged & darkened */
+  --parchment:       #ddd0b4;
+  --parchment-deep:  #d0c19e;
+  --parchment-dark:  #baa87e;
+  --ink:             #16100b;
+  --ink-soft:        #362b20;
+  --ink-muted:       #6b5838;
+  --aged-line:       #a08e6a;
 
   /* Card surface */
-  --card-bg:         #fbf5e3;
+  --card-bg:         #f0e8d1;
   --card-border:     var(--aged-line);
-  --card-shadow:     0 1px 2px rgba(35,27,21,.10), 0 3px 8px rgba(35,27,21,.10);
-  --card-shadow-lift:0 2px 4px rgba(35,27,21,.14), 0 10px 24px rgba(35,27,21,.22);
+  --card-shadow:     0 1px 3px rgba(30,22,16,.14), 0 4px 12px rgba(30,22,16,.12);
+  --card-shadow-lift:0 3px 6px rgba(30,22,16,.18), 0 12px 28px rgba(30,22,16,.25);
   --card-radius:     14px;
 
   /* Class accents */
@@ -36,13 +36,13 @@
   --class-neutral:    #4a3f30;
 
   /* State */
-  --success:  #3e6b4a;
-  --success-hot: #4f8a5e;
-  --fail:     #a8372b;
-  --crit:     #e4b04a;
-  --crit-hot: #f5c76e;
-  --fumble:   #4a4544;
-  --burgundy: #7a1f1f;
+  --success:  #2f5936;
+  --success-hot: #3f7a4a;
+  --fail:     #922b20;
+  --crit:     #d4a038;
+  --crit-hot: #e8b850;
+  --fumble:   #3d3836;
+  --burgundy: #6a1818;
 
   /* Coins */
   --coin-gold:     #d49a36;

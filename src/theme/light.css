@@ -11,7 +11,7 @@ html, body {
   line-height: 1.45;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  background: #2a2420;
+  background: #1e1814;
   touch-action: manipulation;
 }
 
@@ -76,9 +76,9 @@ button, [role="button"], a {
   position: relative;
   padding-bottom: env(safe-area-inset-bottom);
   background:
-    radial-gradient(1200px 520px at 50% -8%, rgba(200,162,75,.18), transparent 60%),
-    radial-gradient(900px 600px at -10% 90%, rgba(168,55,43,.06), transparent 55%),
-    radial-gradient(900px 600px at 110% 90%, rgba(43,94,168,.06), transparent 55%),
+    radial-gradient(1100px 520px at 50% -8%, rgba(70,30,30,.18), transparent 62%),
+    radial-gradient(980px 620px at -10% 90%, rgba(60,36,22,.18), transparent 58%),
+    radial-gradient(980px 620px at 110% 90%, rgba(50,44,30,.15), transparent 58%),
     var(--parchment);
   position: relative;
   overflow: hidden;
@@ -88,8 +88,8 @@ button, [role="button"], a {
   content: "";
   position: fixed; inset: 0;
   background-image:
-    repeating-linear-gradient(90deg, transparent 0 2px, rgba(138,118,84,.035) 2px 3px),
-    repeating-linear-gradient(0deg,  transparent 0 2px, rgba(138,118,84,.028) 2px 3px);
+    repeating-linear-gradient(90deg, transparent 0 2px, rgba(100,82,54,.05) 2px 3px),
+    repeating-linear-gradient(0deg,  transparent 0 2px, rgba(100,82,54,.04) 2px 3px);
   pointer-events: none;
   z-index: 0;
   mix-blend-mode: multiply;
@@ -1819,7 +1819,29 @@ button:focus-visible { box-shadow: 0 0 0 3px rgba(228,176,74,.35); }
   .app {
     max-width: 440px;
     margin: 0 auto;
-    box-shadow: 0 0 0 1px rgba(138,118,84,.3), 0 10px 50px rgba(0,0,0,.12);
+    box-shadow: 0 0 0 1px rgba(100,82,54,.4), 0 10px 50px rgba(0,0,0,.25);
   }
-  body { background: radial-gradient(1400px 900px at 50% 20%, #3a322b, #1b1614); }
+  body { background: radial-gradient(1400px 900px at 50% 20%, #2a221c, #110e0c); }
+}
+
+@media (max-width: 699px) {
+  .dock__item {
+    font-size: 11px;
+    padding: 9px 4px;
+  }
+  .d20 {
+    min-width: 40px;
+    height: 40px;
+    font-size: 14px;
+  }
+  .d20--small {
+    min-width: 32px;
+    height: 32px;
+    font-size: 12px;
+  }
+  .stat__value { font-size: 33px; }
+  .save__value { font-size: 22px; }
+  .hp__number { font-size: 35px; }
+  .hp__number .max { font-size: 21px; }
+  .move-card__value, .ac-result__value { font-size: 28px; }
 }
