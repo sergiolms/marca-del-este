@@ -22,7 +22,7 @@ input, select, textarea { font-size: 16px; }
 button, [role="button"], a {
   touch-action: manipulation;
 }
-.dock__item, .fan__avatar, .d20, .hp__adjust button {
+.dock__item, .fan__avatar, .d20 {
   touch-action: manipulation;
 }
 
