@@ -1,12 +1,12 @@
 :root {
   /* Paper */
-  --parchment:       #f3e9d2;
-  --parchment-deep:  #e8dcc4;
-  --parchment-dark:  #d8c9a3;
-  --ink:             #231b15;
-  --ink-soft:        #4a3f30;
-  --ink-muted:       #8a7654;
-  --aged-line:       #c4b58f;
+  --parchment:       #ebe0c9;
+  --parchment-deep:  #ded1b7;
+  --parchment-dark:  #c9b892;
+  --ink:             #1f1712;
+  --ink-soft:        #43382c;
+  --ink-muted:       #7f6b4d;
+  --aged-line:       #b8a781;
 
   /* Card surface */
   --card-bg:         #fbf5e3;
@@ -62,4 +62,5 @@
   /* Typography */
   --font-display: "Cormorant Garamond", Georgia, serif;
   --font-body:    "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-scribble:"Caveat", "Bradley Hand", "Segoe Print", cursive;
 }
