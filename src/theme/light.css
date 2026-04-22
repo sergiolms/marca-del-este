@@ -28,6 +28,40 @@ input, select, textarea { font-size: 16px; }
 
 /* ---------- App shell ---------- */
 
+/* ---------- PWA banners ---------- */
+.pwa-banner {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 16px;
+  font-size: 13px; font-weight: 600;
+  z-index: 100;
+}
+.pwa-banner--update {
+  background: var(--class-mago, #1f4e79);
+  color: #fff;
+}
+.pwa-banner--install {
+  background: var(--parchment-dark, #e4d6b8);
+  color: var(--ink);
+}
+.pwa-banner span { flex: 1; }
+.pwa-banner__btn {
+  border: none; border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 13px; font-weight: 700;
+  cursor: pointer;
+  background: #fff; color: var(--ink);
+}
+.pwa-banner--install .pwa-banner__btn {
+  background: var(--class-mago, #1f4e79); color: #fff;
+}
+.pwa-banner__dismiss {
+  background: none; border: none;
+  font-size: 18px; line-height: 1;
+  cursor: pointer; opacity: .6;
+  padding: 4px;
+}
+.pwa-banner__dismiss:hover { opacity: 1; }
+
 .app {
   min-height: 100svh;
   display: flex;
@@ -327,6 +361,29 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 600; letter-spacing:
 }
 .stat__mod--plus { background: #dbe9cf; border-color: #9abf85; color: #274a1a; }
 .stat__mod--minus { background: #efd4cc; border-color: #c88577; color: #5e1d10; }
+
+/* Stats lock */
+.stats-lock {
+  font-size: 12px; gap: 4px;
+  transition: background 200ms, color 200ms;
+}
+.stats-lock--on {
+  background: var(--aged-line); color: var(--ink);
+}
+.stat--locked {
+  opacity: .85;
+  pointer-events: none;
+}
+.stat--locked::after {
+  content: ""; position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent 0 6px,
+    rgba(138,118,84,.04) 6px 7px
+  );
+  pointer-events: none;
+  border-radius: inherit;
+}
 
 /* ---------- Save cards ---------- */
 

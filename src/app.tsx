@@ -5,6 +5,7 @@ import { newCharacter } from "./state/character";
 import { TopBar } from "./components/ui/TopBar";
 import { Dock, type TabKey } from "./components/ui/Dock";
 import { FxLayer } from "./components/ui/FxLayer";
+import { PwaBanner } from "./components/ui/PwaBanner";
 import { SheetScreen } from "./screens/Sheet";
 import { CombatScreen } from "./screens/Combat";
 import { InventoryScreen } from "./screens/Inventory";
@@ -39,6 +40,7 @@ export function App() {
 
   return (
     <div class="app">
+      <PwaBanner />
       <TopBar label={tabLabel.value} />
       <main class="app__main">
         {tab.value === "sheet"     && <SheetScreen />}
