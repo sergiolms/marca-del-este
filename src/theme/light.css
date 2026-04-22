@@ -1334,7 +1334,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 600; letter-spacing:
 
 /* ---------- Edit grid ---------- */
 
-.edit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.edit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; overflow: hidden; }
 .edit-grid label { display: grid; gap: 4px; font-size: 11px; color: var(--ink-muted); font-weight: 700; text-transform: uppercase; letter-spacing: .08em; }
 .edit-grid label.edit-check {
   display: flex;
@@ -1364,6 +1364,9 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 600; letter-spacing:
 }
 .edit-grid label.edit-check span { line-height: 1; }
 .edit-grid input, .edit-grid select, .edit-grid textarea {
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
   padding: 9px 11px;
   border: 1px solid var(--aged-line);
   border-radius: 10px;

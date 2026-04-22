@@ -1,4 +1,5 @@
 import { useRef, useState } from "preact/hooks";
+import { createPortal } from "preact/compat";
 import { appState, activeCharacter, switchCharacter, addCharacter, removeCharacter } from "../../state/store";
 import { newCharacter } from "../../state/character";
 import { haptic } from "../../state/dice";
@@ -106,7 +107,7 @@ export function TopBar({ label }: Props) {
         <Icon name="userAdd" />
       </button>
 
-      {overflow && (
+      {overflow && createPortal(
         <div class="char-menu-backdrop" onClick={() => setOverflow(false)}>
           <div class="char-menu" onClick={e => e.stopPropagation()}>
             <h3 style="margin:0 0 8px;font-family:var(--font-display);font-size:18px">Todos los personajes</h3>
@@ -129,9 +130,9 @@ export function TopBar({ label }: Props) {
             <button class="chip btn-with-icon" style="margin-top:10px;padding:8px 12px;justify-content:center;width:100%" onClick={() => setOverflow(false)}><Icon name="cancel" />Cerrar</button>
           </div>
         </div>
-      )}
+      , document.body)}
 
-      {menuFor && (
+      {menuFor && createPortal(
         <div class="char-menu-backdrop" onClick={() => setMenuFor(null)}>
           <div class="char-menu" onClick={e => e.stopPropagation()}>
             <h3 style="margin:0 0 8px;font-family:var(--font-display);font-size:18px">
@@ -152,7 +153,7 @@ export function TopBar({ label }: Props) {
             </p>
           </div>
         </div>
-      )}
+      , document.body)}
     </header>
   );
 }
