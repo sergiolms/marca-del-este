@@ -11,7 +11,7 @@ html, body {
   line-height: 1.45;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  background: #2a2420;
+  background: #1e1814;
   touch-action: manipulation;
 }
 
@@ -76,9 +76,9 @@ button, [role="button"], a {
   position: relative;
   padding-bottom: env(safe-area-inset-bottom);
   background:
-    radial-gradient(1100px 520px at 50% -8%, rgba(88,44,44,.13), transparent 62%),
-    radial-gradient(980px 620px at -10% 90%, rgba(74,48,33,.13), transparent 58%),
-    radial-gradient(980px 620px at 110% 90%, rgba(64,58,44,.11), transparent 58%),
+    radial-gradient(1100px 520px at 50% -8%, rgba(70,30,30,.18), transparent 62%),
+    radial-gradient(980px 620px at -10% 90%, rgba(60,36,22,.18), transparent 58%),
+    radial-gradient(980px 620px at 110% 90%, rgba(50,44,30,.15), transparent 58%),
     var(--parchment);
   position: relative;
   overflow: hidden;
@@ -88,28 +88,13 @@ button, [role="button"], a {
   content: "";
   position: fixed; inset: 0;
   background-image:
-    repeating-linear-gradient(90deg, transparent 0 2px, rgba(138,118,84,.035) 2px 3px),
-    repeating-linear-gradient(0deg,  transparent 0 2px, rgba(138,118,84,.028) 2px 3px);
+    repeating-linear-gradient(90deg, transparent 0 2px, rgba(100,82,54,.05) 2px 3px),
+    repeating-linear-gradient(0deg,  transparent 0 2px, rgba(100,82,54,.04) 2px 3px);
   pointer-events: none;
   z-index: 0;
   mix-blend-mode: multiply;
 }
 .app > * { position: relative; z-index: 1; }
-.app::after {
-  content: "";
-  position: fixed;
-  right: var(--scribble-offset-x);
-  top: 14%;
-  width: 228px;
-  height: 204px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 220'%3E%3Cg fill='none' stroke='%23614f3b' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' opacity='.38'%3E%3Cpath d='M20 40c18-10 28 8 43 0s20 5 34-2'/%3E%3Cpath d='M18 84c14-13 36-6 48-14 15-9 24 7 36-1'/%3E%3Cpath d='M128 34l15 19m0-19-15 19'/%3E%3Cpath d='M126 88l17 24m-2-28-13 12m13 12-13-12'/%3E%3Cpath d='M168 54c8 8 17 14 28 12M166 78c10-8 18-10 28-8'/%3E%3Cpath d='M34 126c8 7 17 12 28 11M32 150c12-9 21-10 31-8'/%3E%3Cpath d='M112 138c10-5 14 2 24-1m-24 18c10-6 14 1 24-2'/%3E%3Cpath d='M162 136c6 7 14 14 24 12M160 160c10-8 16-8 25-6'/%3E%3Ccircle cx='88' cy='52' r='7'/%3E%3Ccircle cx='102' cy='176' r='6'/%3E%3C/g%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-size: contain;
-  transform: rotate(-8deg);
-  pointer-events: none;
-  user-select: none;
-  z-index: 0;
-}
 
 .app__main {
   flex: 1 1 auto;
@@ -1834,17 +1819,12 @@ button:focus-visible { box-shadow: 0 0 0 3px rgba(228,176,74,.35); }
   .app {
     max-width: 440px;
     margin: 0 auto;
-    box-shadow: 0 0 0 1px rgba(138,118,84,.3), 0 10px 50px rgba(0,0,0,.12);
+    box-shadow: 0 0 0 1px rgba(100,82,54,.4), 0 10px 50px rgba(0,0,0,.25);
   }
-  body { background: radial-gradient(1400px 900px at 50% 20%, #3a322b, #1b1614); }
+  body { background: radial-gradient(1400px 900px at 50% 20%, #2a221c, #110e0c); }
 }
 
 @media (max-width: 699px) {
-  .app { font-size: 17px; }
-  .app button,
-  .app [role="button"] {
-    font-size: 1.04em;
-  }
   .dock__item {
     font-size: 11px;
     padding: 9px 4px;
