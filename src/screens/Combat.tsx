@@ -3,7 +3,7 @@ import { HpBar } from "../components/ui/HpBar";
 import { Timeline } from "../components/ui/Timeline";
 import { SealButton } from "../components/ui/SealButton";
 import { EditableStat } from "../components/ui/EditableStat";
-import { clampHp, applyLongRest, applyShortRest } from "../rules/combat";
+import { clampHp, applyLongRest, applyShortRest, totalCarriedWeight } from "../rules/combat";
 import { parseDamageExpr, parseBonus, roll, haptic } from "../state/dice";
 import { fx } from "../components/ui/FxLayer";
 import { uid } from "../state/character";
@@ -24,7 +24,9 @@ export function CombatScreen() {
   const acInputValue = acMode === "ascending" ? c.combat.acAscending : c.combat.ac;
   const acModeLabel = acMode === "ascending" ? "ascendente" : "descendente";
   const preparedSpells = c.spells.filter(s => s.prepared);
-  const movement = movementInfo(c.character.movement);
+  const carryWeight = totalCarriedWeight(c.inventory.items);
+  const isHeavy = carryWeight > c.inventory.maxWeight * 0.75;
+  const movement = movementInfo(c.character.movement, isHeavy);
 
   const onHp = (delta: number) => {
     haptic(delta < 0 ? "heavy" : "light");
@@ -469,11 +471,17 @@ export function CombatScreen() {
   );
 }
 
-function movementInfo(raw: string): { metersLabel: string; squaresLabel: string } {
-  const match = raw.replace(",", ".").match(/-?\d+(?:\.\d+)?/);
-  if (!match) return { metersLabel: raw || "—", squaresLabel: "— casillas" };
-  const meters = Number(match[0]);
-  if (!Number.isFinite(meters)) return { metersLabel: raw || "—", squaresLabel: "— casillas" };
+function movementInfo(raw: string, isHeavy = false): { metersLabel: string; squaresLabel: string } {
+  const norm = raw.replace(",", ".");
+  const parseValue = (pattern: RegExp) => {
+    const m = norm.match(pattern);
+    return m ? Number(m[1]) : null;
+  };
+  const heavyMatch = parseValue(/(\d+(?:\.\d+)?)\s*m[.\s]*(?:con carga pesada)/i);
+  const combatMatch = parseValue(/(\d+(?:\.\d+)?)\s*m[.\s]*en combate/i);
+  const fallback = parseValue(/^(\d+(?:\.\d+)?)/);
+  const meters = (isHeavy && heavyMatch != null) ? heavyMatch : (combatMatch ?? fallback);
+  if (meters == null || !Number.isFinite(meters)) return { metersLabel: raw || "—", squaresLabel: "— casillas" };
   return {
     metersLabel: `${formatMove(meters)} m`,
     squaresLabel: `${formatMove(meters / 2)} casillas`,

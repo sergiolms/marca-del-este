@@ -1,21 +1,21 @@
 :root {
-  /* Paper — aged & darkened */
-  --parchment:       #ddd0b4;
-  --parchment-deep:  #d0c19e;
-  --parchment-dark:  #baa87e;
-  --ink:             #16100b;
-  --ink-soft:        #362b20;
-  --ink-muted:       #6b5838;
-  --aged-line:       #a08e6a;
+  /* ── Parchment palette ── aged amber, rich & warm */
+  --parchment:        #e8d49b;
+  --parchment-deep:   #d3b86a;
+  --parchment-dark:   #b89650;
+  --ink:              #180f05;
+  --ink-soft:         #3a2010;
+  --ink-muted:        #7a5030;
+  --aged-line:        #8a6820;
 
-  /* Card surface */
-  --card-bg:         #f0e8d1;
-  --card-border:     var(--aged-line);
-  --card-shadow:     0 1px 3px rgba(30,22,16,.14), 0 4px 12px rgba(30,22,16,.12);
-  --card-shadow-lift:0 3px 6px rgba(30,22,16,.18), 0 12px 28px rgba(30,22,16,.25);
-  --card-radius:     14px;
+  /* ── Card surface ── cream folio */
+  --card-bg:          #f3e7c4;
+  --card-border:      var(--aged-line);
+  --card-shadow:      0 2px 4px rgba(24,15,5,.20), 0 6px 18px rgba(24,15,5,.13);
+  --card-shadow-lift: 0 4px 10px rgba(24,15,5,.26), 0 16px 36px rgba(24,15,5,.22);
+  --card-radius:      10px;
 
-  /* Class accents */
+  /* ── Class accents ── */
   --class-guerrero:   #a8372b;
   --class-mago:       #2b5ea8;
   --class-clerigo:    #c8a24b;
@@ -35,23 +35,23 @@
   --class-elfo-oscuro:#4a2f5c;
   --class-neutral:    #4a3f30;
 
-  /* State */
-  --success:  #2f5936;
-  --success-hot: #3f7a4a;
-  --fail:     #922b20;
-  --crit:     #d4a038;
-  --crit-hot: #e8b850;
-  --fumble:   #3d3836;
-  --burgundy: #6a1818;
+  /* ── State ── */
+  --success:    #2a5530;
+  --success-hot:#3f7a4a;
+  --fail:       #922b20;
+  --crit:       #d4a038;
+  --crit-hot:   #e8b850;
+  --fumble:     #3d3836;
+  --burgundy:   #6a1818;
 
-  /* Coins */
+  /* ── Coins ── */
   --coin-gold:     #d49a36;
   --coin-silver:   #c4c7ce;
   --coin-electrum: #c9a56c;
   --coin-copper:   #c17a4a;
   --coin-platinum: #e7ecf3;
 
-  /* Motion */
+  /* ── Motion ── */
   --ease-standard: cubic-bezier(.2,.7,.2,1);
   --ease-impact:   cubic-bezier(.36,.07,.19,.97);
   --ease-decel:    cubic-bezier(0,.6,.2,1);
@@ -59,7 +59,8 @@
   --fx-med:   280ms;
   --fx-long:  800ms;
 
-  /* Typography */
+  /* ── Typography ── */
   --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-label:   "Cinzel", "Cormorant Garamond", Georgia, serif;
   --font-body:    "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
