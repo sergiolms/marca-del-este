@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from "vitest";
-import { emptyState, loadState, saveState, STORAGE_KEY, LEGACY_V2_KEY } from "../../src/state/persistence";
+import { emptyState, loadState, saveState, STORAGE_KEY } from "../../src/state/persistence";
 import { newCharacter } from "../../src/state/character";
 
 describe("persistence", () => {
@@ -18,20 +18,6 @@ describe("persistence", () => {
     const loaded = await loadState();
     expect(loaded.activeCharacterId).toBe(c.id);
     expect(loaded.characters[0].character.name).toBe("Baltasar");
-  });
-
-  it("migrates from legacy v2 single-character", async () => {
-    const legacyV2 = {
-      character: { name: "Old Hero", classKey: "fighter", className: "Guerrero" },
-      combat: { hpMax: 10, hpCurrent: 7, hpTemp: 0, attacks: [] },
-      money: { copper: 0, silver: 0, electrum: 0, gold: 5, platinum: 0 },
-    };
-    localStorage.setItem(LEGACY_V2_KEY, JSON.stringify(legacyV2));
-    const state = await loadState();
-    expect(state.characters.length).toBe(1);
-    expect(state.characters[0].character.name).toBe("Old Hero");
-    expect(state.characters[0].money.gold).toBe(5);
-    expect(state.activeCharacterId).toBe(state.characters[0].id);
   });
 
   it("drops broken JSON in storage", async () => {

@@ -34,7 +34,7 @@ export function App() {
     void loadFromStorage().then(() => {
       if (disposed) return;
       disposePersist = startAutoPersist();
-      // Ensure there's at least one character after storage/migration has loaded.
+      // Ensure there's at least one character after storage has loaded.
       if (!activeCharacter.value) {
         const c = newCharacter({ name: "Aventurero", classKey: "guerrero", className: "Guerrero", raceKey: "humano", race: "Humano", alignment: "Neutral" });
         addCharacter(c);

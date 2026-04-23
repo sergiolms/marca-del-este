@@ -5,7 +5,7 @@ import { computeXpInfo } from "../rules/xp";
 import { xpTableFor, hitProgressionFor, classByKey, savesFor } from "../rules/classLookup";
 import { IdentityEditor } from "../components/ui/IdentityEditor";
 import { SealButton } from "../components/ui/SealButton";
-import { roll, haptic } from "../state/dice";
+import { haptic } from "../state/dice";
 import { uid } from "../state/character";
 import { entry } from "../state/timeline";
 import { fx } from "../components/ui/FxLayer";
@@ -23,11 +23,11 @@ const STAT_ROWS: Array<{ key: StatKey; label: string; full: string }> = [
 ];
 
 const SAVE_ROWS: Array<{ key: keyof import("../rules/types").Saves; label: string }> = [
-  { key: "breath", label: "Aliento" },
-  { key: "death", label: "Muerte" },
-  { key: "paralysis", label: "Parálisis" },
-  { key: "wands", label: "Varas" },
-  { key: "spells", label: "Conjuros" },
+  { key: "death", label: "Muerte o veneno" },
+  { key: "wands", label: "Varitas mágicas y cetros" },
+  { key: "paralysis", label: "Petrificación o parálisis" },
+  { key: "breath", label: "Armas de aliento" },
+  { key: "spells", label: "Conjuros y armas mágicas" },
 ];
 
 export function SheetScreen() {
@@ -108,24 +108,6 @@ export function SheetScreen() {
       "crit",
       "3d6 × 6",
     );
-  };
-
-  const rollSave = (saveKey: keyof import("../rules/types").Saves, label: string) => (e: MouseEvent) => {
-    const target = c.saves[saveKey];
-    const result = roll({ count: 1, sides: 20 });
-    const success = result.total >= target;
-    haptic(result.crit ? "crit" : "medium");
-    updateActive(cc => ({
-      ...cc,
-      combat: {
-        ...cc.combat,
-        timeline: [
-          entry(`Salv. ${label} → ${result.total} vs ${target} <b>${success ? "✓" : "✗"}</b>`, success ? "normal" : "fumble"),
-          ...cc.combat.timeline,
-        ].slice(0, 30),
-      },
-    }));
-    fx.emitStamp((e.currentTarget as HTMLElement).getBoundingClientRect(), String(result.total), result.crit ? "crit" : result.fumble ? "fumble" : "normal", `Salv. ${label}`);
   };
 
   const autoEffectsFor = (kind: string) => c.effects.filter(e => e.kind === kind);
@@ -231,7 +213,6 @@ export function SheetScreen() {
                 }}
                 aria-label={`Valor salvación ${s.label}`}
               />
-              <SealButton onClick={rollSave(s.key, s.label)} ariaLabel={`Tira salvación ${s.label}`}>d20</SealButton>
             </div>
           ))}
         </div>

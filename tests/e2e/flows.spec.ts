@@ -4,6 +4,7 @@ test.describe("Marca del Este — critical flows", () => {
   test.beforeEach(async ({ page }) => {
     await page.addInitScript(() => {
       localStorage.clear();
+      indexedDB.deleteDatabase("marca-del-este");
     });
   });
 
@@ -62,10 +63,11 @@ test.describe("Marca del Este — critical flows", () => {
   });
 
   test("buying a weapon deducts wallet, adds inventory row, creates attack", async ({ page }) => {
-    await page.addInitScript(() => {
+    await page.goto("/");
+    await page.evaluate(async () => {
       const now = new Date().toISOString();
       const id = "e2e-buyer";
-      localStorage.setItem("marca-del-este.v3", JSON.stringify({
+      const state = {
         version: 3,
         activeCharacterId: id,
         characters: [{
@@ -84,9 +86,25 @@ test.describe("Marca del Este — critical flows", () => {
           xp: { current: 0, next: null, autoLevel: true },
           journal: { notes: "", goals: "", sessions: [] },
         }],
-      }));
+      };
+      await new Promise<void>((resolve, reject) => {
+        const request = indexedDB.open("marca-del-este", 1);
+        request.onupgradeneeded = () => {
+          const db = request.result;
+          if (!db.objectStoreNames.contains("kv")) db.createObjectStore("kv");
+        };
+        request.onerror = () => reject(request.error);
+        request.onsuccess = () => {
+          const db = request.result;
+          const tx = db.transaction("kv", "readwrite");
+          tx.objectStore("kv").put(state, "app-state");
+          tx.oncomplete = () => resolve();
+          tx.onerror = () => reject(tx.error);
+          tx.onabort = () => reject(tx.error);
+        };
+      });
     });
-    await page.goto("/");
+    await page.reload();
 
     await page.getByRole("button", { name: /Tienda/i }).click();
     // Buy the first weapon with Comprar enabled
