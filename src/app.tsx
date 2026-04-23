@@ -28,14 +28,23 @@ const tabLabel = computed<string>(() => {
 
 export function App() {
   useEffect(() => {
-    loadFromStorage();
-    const dispose = startAutoPersist();
-    // Ensure there's at least one character
-    if (!activeCharacter.value) {
-      const c = newCharacter({ name: "Aventurero", classKey: "guerrero", className: "Guerrero", raceKey: "humano", race: "Humano", alignment: "Neutral" });
-      addCharacter(c);
-    }
-    return () => dispose();
+    let disposed = false;
+    let disposePersist: (() => void) | undefined;
+
+    void loadFromStorage().then(() => {
+      if (disposed) return;
+      disposePersist = startAutoPersist();
+      // Ensure there's at least one character after storage/migration has loaded.
+      if (!activeCharacter.value) {
+        const c = newCharacter({ name: "Aventurero", classKey: "guerrero", className: "Guerrero", raceKey: "humano", race: "Humano", alignment: "Neutral" });
+        addCharacter(c);
+      }
+    });
+
+    return () => {
+      disposed = true;
+      disposePersist?.();
+    };
   }, []);
 
   return (

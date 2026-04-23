@@ -1,9 +1,15 @@
 // Persistence layer. v3 shape = multi-character app state.
-// Migrates from v2 single-character (key `marca-del-este.character.v2`) and
-// legacy v1 (`marca-del-este.character.v1`).
+// Primary storage is IndexedDB. On first load without IndexedDB data, we run a
+// one-time migration from the legacy localStorage keys and store the result in
+// IndexedDB. If IndexedDB is unavailable, localStorage remains the fallback.
 
 import type { AppState, Character } from "../rules/types";
 import { newCharacter } from "./character";
+
+const DB_NAME = "marca-del-este";
+const DB_VERSION = 1;
+const STORE_NAME = "kv";
+const STATE_RECORD_ID = "app-state";
 
 export const STORAGE_KEY = "marca-del-este.v3";
 export const LEGACY_V2_KEY = "marca-del-este.character.v2";
@@ -13,7 +19,37 @@ export function emptyState(): AppState {
   return { version: 3, activeCharacterId: null, characters: [] };
 }
 
-export function loadState(): AppState {
+export async function loadState(): Promise<AppState> {
+  const db = await openAppDb();
+  if (!db) return loadLocalState();
+
+  try {
+    const stored = await idbGet<AppState>(db, STATE_RECORD_ID);
+    if (stored?.version === 3) return sanitize(stored);
+
+    const migrated = loadLocalState();
+    if (hasStateData(migrated)) await idbPut(db, STATE_RECORD_ID, migrated);
+    return migrated;
+  } catch {
+    return loadLocalState();
+  }
+}
+
+export async function saveState(state: AppState): Promise<void> {
+  const db = await openAppDb();
+  if (!db) {
+    saveLocalState(state);
+    return;
+  }
+
+  try {
+    await idbPut(db, STATE_RECORD_ID, sanitize(state));
+  } catch {
+    saveLocalState(state);
+  }
+}
+
+function loadLocalState(): AppState {
   if (typeof localStorage === "undefined") return emptyState();
 
   const raw = localStorage.getItem(STORAGE_KEY);
@@ -52,9 +88,57 @@ export function loadState(): AppState {
   return emptyState();
 }
 
-export function saveState(state: AppState): void {
+function saveLocalState(state: AppState): void {
   if (typeof localStorage === "undefined") return;
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+function hasStateData(state: AppState): boolean {
+  return state.characters.length > 0;
+}
+
+let dbPromise: Promise<IDBDatabase | null> | null = null;
+
+function openAppDb(): Promise<IDBDatabase | null> {
+  if (typeof indexedDB === "undefined") return Promise.resolve(null);
+  dbPromise ??= new Promise(resolve => {
+    let request: IDBOpenDBRequest;
+    try {
+      request = indexedDB.open(DB_NAME, DB_VERSION);
+    } catch {
+      resolve(null);
+      return;
+    }
+
+    request.onupgradeneeded = () => {
+      const db = request.result;
+      if (!db.objectStoreNames.contains(STORE_NAME)) db.createObjectStore(STORE_NAME);
+    };
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => resolve(null);
+    request.onblocked = () => resolve(null);
+  });
+  return dbPromise;
+}
+
+function idbGet<T>(db: IDBDatabase, key: string): Promise<T | undefined> {
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE_NAME, "readonly");
+    const req = tx.objectStore(STORE_NAME).get(key);
+    req.onsuccess = () => resolve(req.result as T | undefined);
+    req.onerror = () => reject(req.error);
+    tx.onerror = () => reject(tx.error);
+  });
+}
+
+function idbPut<T>(db: IDBDatabase, key: string, value: T): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE_NAME, "readwrite");
+    tx.objectStore(STORE_NAME).put(value, key);
+    tx.oncomplete = () => resolve();
+    tx.onerror = () => reject(tx.error);
+    tx.onabort = () => reject(tx.error);
+  });
 }
 
 function sanitize(s: AppState): AppState {

@@ -62,16 +62,31 @@ test.describe("Marca del Este — critical flows", () => {
   });
 
   test("buying a weapon deducts wallet, adds inventory row, creates attack", async ({ page }) => {
-    await page.goto("/");
-    // Grant some gold via localStorage seed
-    await page.evaluate(() => {
-      const raw = localStorage.getItem("marca-del-este.v3");
-      if (!raw) return;
-      const s = JSON.parse(raw);
-      s.characters[0].money = { copper: 0, silver: 0, electrum: 0, gold: 500, platinum: 0 };
-      localStorage.setItem("marca-del-este.v3", JSON.stringify(s));
+    await page.addInitScript(() => {
+      const now = new Date().toISOString();
+      const id = "e2e-buyer";
+      localStorage.setItem("marca-del-este.v3", JSON.stringify({
+        version: 3,
+        activeCharacterId: id,
+        characters: [{
+          id,
+          createdAt: now,
+          updatedAt: now,
+          character: { name: "Comprador", player: "", classKey: "guerrero", className: "Guerrero", raceKey: "humano", race: "Humano", alignment: "Neutral", level: 1, movement: "9 m", languages: "Común" },
+          stats: { strength: 10, dexterity: 10, constitution: 10, intelligence: 10, wisdom: 10, charisma: 10 },
+          saves: { death: 14, wands: 15, paralysis: 16, breath: 17, spells: 17 },
+          combat: { hpCurrent: 6, hpMax: 6, hpTemp: 0, ac: 9, acAscending: 10, touchAc: "", flatFootedAc: "", initiative: "+0", surprise: "1-2 en 1d6", attackBonus: "+0", hitDice: "1d6 · 1", logDraft: "", attacks: [], timeline: [] },
+          money: { copper: 0, silver: 0, electrum: 0, gold: 500, platinum: 0 },
+          inventory: { maxWeight: 60, items: [] },
+          spells: [],
+          effects: [],
+          magicItems: [],
+          xp: { current: 0, next: null, autoLevel: true },
+          journal: { notes: "", goals: "", sessions: [] },
+        }],
+      }));
     });
-    await page.reload();
+    await page.goto("/");
 
     await page.getByRole("button", { name: /Tienda/i }).click();
     // Buy the first weapon with Comprar enabled

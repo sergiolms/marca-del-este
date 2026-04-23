@@ -14,12 +14,17 @@ export const activeCharacter = computed<Character | null>(() => {
   return s.characters.find(c => c.id === s.activeCharacterId) ?? null;
 });
 
-export function loadFromStorage(): void {
-  appState.value = loadState();
+export async function loadFromStorage(): Promise<void> {
+  appState.value = await loadState();
 }
 
+let saveQueue = Promise.resolve();
+
 export function persist(): void {
-  saveState(appState.value);
+  const snapshot = appState.value;
+  saveQueue = saveQueue
+    .then(() => saveState(snapshot))
+    .catch(() => undefined);
 }
 
 let persistScheduled = false;
