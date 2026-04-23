@@ -103,8 +103,11 @@ export function SheetScreen() {
         ].slice(0, 30),
       },
     }));
-    // Quick fullscreen stamp of the total
-    fx.emitStamp(undefined, `${newStats.strength}·${newStats.dexterity}·${newStats.constitution}`, "crit", "3d6 × 6");
+    fx.emitGrid(
+      STAT_ROWS.map(s => ({ label: s.label, value: String(newStats[s.key]) })),
+      "crit",
+      "3d6 × 6",
+    );
   };
 
   const rollSave = (saveKey: keyof import("../rules/types").Saves, label: string) => (e: MouseEvent) => {

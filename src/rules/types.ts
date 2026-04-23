@@ -87,6 +87,13 @@ export interface Effect {
   kind: string;
   duration: string;
   notes: string;
+  /** Times this power can be activated before its reset window. */
+  usesPerDay?: number;
+  /** Activations spent so far within the current reset window. */
+  usesToday?: number;
+  /** Rest that refills usesToday. "long" is the classic "X al día"; "short"
+   *  also refills on short rests. */
+  restReset?: "short" | "long";
 }
 
 export interface MagicItemInstance {

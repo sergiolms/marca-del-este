@@ -15,6 +15,7 @@ export type IconName =
   | "journal"
   | "magic"
   | "open"
+  | "prepare"
   | "rest"
   | "save"
   | "shield"
@@ -45,6 +46,7 @@ const paths: Record<IconName, JSX.Element> = {
   journal: <path d="M6 4h11a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2V5a1 1 0 0 1 1-1Zm2 4h8M8 12h7" />,
   magic: <path d="m5 19 9-9m-2-2 4 4M14 3l1 3 3 1-3 1-1 3-1-3-3-1 3-1 1-3ZM5 4l.5 1.5L7 6l-1.5.5L5 8l-.5-1.5L3 6l1.5-.5L5 4Z" />,
   open: <path d="M4 12h14m0 0-4-4m4 4-4 4M4 5v14" />,
+  prepare: <path d="M3 10c3-2 6-2 9 0v11c-3-2-6-2-9 0V10Zm18 0c-3-2-6-2-9 0v11c3-2 6-2 9 0V10ZM12 2v5m-2-2 2 2 2-2" />,
   rest: <path d="M18 15.5A7 7 0 0 1 8.5 6a8 8 0 1 0 9.5 9.5Z" />,
   save: <path d="M5 4h12l2 2v14H5V4Zm3 0v6h8V4M8 20v-6h8v6" />,
   shield: <path d="M12 3 20 6v5c0 5-3 8-8 10-5-2-8-5-8-10V6l8-3Z" />,

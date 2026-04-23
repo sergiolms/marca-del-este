@@ -63,6 +63,19 @@ describe("applyLongRest", () => {
     // purity: original unchanged
     expect(c.combat.hpCurrent).toBe(8);
   });
+
+  it("refills daily class powers", () => {
+    const c = newCharacter();
+    c.effects = [
+      { id: "e1", locked: true, active: true, name: "Imposición de manos", kind: "Habilidad de clase", duration: "Permanente", notes: "", usesPerDay: 1, usesToday: 1, restReset: "long" },
+      { id: "e2", locked: true, active: true, name: "Furia", kind: "Habilidad de clase", duration: "Permanente", notes: "", usesPerDay: 1, usesToday: 1, restReset: "short" },
+      { id: "e3", locked: true, active: true, name: "Aura", kind: "Habilidad de clase", duration: "Permanente", notes: "" },
+    ];
+    const next = applyLongRest(c);
+    expect(next.effects.find(e => e.id === "e1")?.usesToday).toBe(0);
+    expect(next.effects.find(e => e.id === "e2")?.usesToday).toBe(0);
+    expect(next.effects.find(e => e.id === "e3")?.usesToday).toBeUndefined();
+  });
 });
 
 describe("applyShortRest", () => {
@@ -95,6 +108,17 @@ describe("applyShortRest", () => {
     c.combat.hpMax = 20; c.combat.hpCurrent = 5;
     const { recovered } = applyShortRest(c, () => 0); // 1 + (-3) = -2 → min 1
     expect(recovered).toBe(1);
+  });
+
+  it("refills short-rest powers only; long-rest powers keep their spent uses", () => {
+    const c = newCharacter();
+    c.effects = [
+      { id: "short", locked: true, active: true, name: "Respiro", kind: "Habilidad de clase", duration: "Permanente", notes: "", usesPerDay: 2, usesToday: 2, restReset: "short" },
+      { id: "long",  locked: true, active: true, name: "Imposición de manos", kind: "Habilidad de clase", duration: "Permanente", notes: "", usesPerDay: 1, usesToday: 1, restReset: "long" },
+    ];
+    const { next } = applyShortRest(c, () => 0);
+    expect(next.effects.find(e => e.id === "short")?.usesToday).toBe(0);
+    expect(next.effects.find(e => e.id === "long")?.usesToday).toBe(1);
   });
 });
 

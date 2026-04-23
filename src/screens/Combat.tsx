@@ -14,6 +14,7 @@ import { formatModifier } from "../rules/modifier";
 import { isDerivedAttack, unequipFromAttack } from "../rules/equip";
 import { EnchantmentPicker } from "../components/ui/EnchantmentPicker";
 import { acBonusLabel, acValue, calculateArmorClass, setBaseArmorClass, type AcMode } from "../rules/armorClass";
+import { automaticMagicAbilities } from "../rules/magicAbilities";
 import type { Attack } from "../rules/types";
 
 export function CombatScreen() {
@@ -24,6 +25,9 @@ export function CombatScreen() {
   const acInputValue = acMode === "ascending" ? c.combat.acAscending : c.combat.ac;
   const acModeLabel = acMode === "ascending" ? "ascendente" : "descendente";
   const preparedSpells = c.spells.filter(s => s.prepared);
+  const classPowers = automaticMagicAbilities(c.effects)
+    .filter(a => a.kind === "power" && a.effect.usesPerDay !== undefined)
+    .map(a => a.effect);
   const carryWeight = totalCarriedWeight(c.inventory.items);
   const isHeavy = carryWeight > c.inventory.maxWeight * 0.75;
   const movement = movementInfo(c.character.movement, isHeavy);
@@ -95,22 +99,46 @@ export function CombatScreen() {
     fx.emitStamp(undefined, `+${1}`, "normal", "Descanso corto");
   };
 
-  const castPreparedSpell = (spellId: string) => {
-    const spell = c.spells.find(s => s.id === spellId);
-    if (!spell?.prepared || spell.used) return;
-    haptic("medium");
+  const useClassPower = (effectId: string) => {
+    const power = c.effects.find(e => e.id === effectId);
+    if (!power?.usesPerDay) return;
+    const spent = (power.usesToday ?? 0) >= power.usesPerDay;
+    haptic(spent ? "light" : "medium");
     updateActive(cc => ({
       ...cc,
-      spells: cc.spells.map(s => s.id === spellId ? { ...s, used: true } : s),
+      effects: cc.effects.map(e => {
+        if (e.id !== effectId || e.usesPerDay === undefined) return e;
+        if (spent) return { ...e, usesToday: 0 };
+        return { ...e, usesToday: Math.min(e.usesPerDay, (e.usesToday ?? 0) + 1) };
+      }),
       combat: {
         ...cc.combat,
         timeline: [
-          entry(`✦ Conjuro lanzado: <b>${spell.name}</b> (N${spell.level})`, "normal"),
+          entry(spent ? `↺ Recuperado: <b>${power.name}</b>` : `✦ Poder activado: <b>${power.name}</b>`, spent ? "heal" : "normal"),
           ...cc.combat.timeline,
         ].slice(0, 30),
       },
     }));
-    fx.emitStamp(undefined, `N${spell.level}`, "normal", spell.name);
+    if (!spent) fx.emitStamp(undefined, "", "normal", power.name);
+  };
+
+  const castPreparedSpell = (spellId: string) => {
+    const spell = c.spells.find(s => s.id === spellId);
+    if (!spell?.prepared) return;
+    const wasUsed = spell.used;
+    haptic(wasUsed ? "light" : "medium");
+    updateActive(cc => ({
+      ...cc,
+      spells: cc.spells.map(s => s.id === spellId ? { ...s, used: !s.used } : s),
+      combat: {
+        ...cc.combat,
+        timeline: [
+          entry(wasUsed ? `↺ Recuperado: <b>${spell.name}</b> (N${spell.level})` : `✦ Conjuro lanzado: <b>${spell.name}</b> (N${spell.level})`, wasUsed ? "heal" : "normal"),
+          ...cc.combat.timeline,
+        ].slice(0, 30),
+      },
+    }));
+    if (!wasUsed) fx.emitStamp(undefined, "", "normal", `${spell.name} · N${spell.level}`);
   };
 
   const rollAttack = (attackId: string, kind: "atk" | "dmg") => (e: MouseEvent) => {
@@ -311,9 +339,36 @@ export function CombatScreen() {
         )}
       </section>
 
-      {preparedSpells.length > 0 && (
+      {(preparedSpells.length > 0 || classPowers.length > 0) && (
         <section class="section">
-          <h2 class="section__title">Conjuros preparados</h2>
+          <h2 class="section__title">Conjuros y poderes</h2>
+          {classPowers.map(p => {
+            const used = p.usesToday ?? 0;
+            const max = p.usesPerDay ?? 0;
+            const spent = used >= max;
+            return (
+              <div class={`card spell-card combat-spell ${spent ? "spell-card--used" : "card--lift"}`} key={p.id}>
+                <div class="combat-spell__main">
+                  <div class="spell-card__ico"><Icon name="magic" /></div>
+                  <div>
+                    <div class="spell-card__title">{p.name}</div>
+                    <div class="spell-card__meta">
+                      Poder de clase · {used} / {max} usos hoy
+                    </div>
+                  </div>
+                </div>
+                <button
+                  class="buy-btn btn-with-icon"
+                  onClick={() => useClassPower(p.id)}
+                  aria-label={spent ? `Recuperar ${p.name}` : `Activar ${p.name}`}
+                  title={spent ? "Pulsa para recuperar manualmente" : "Gastar un uso"}
+                >
+                  <Icon name={spent ? "rest" : "magic"} />
+                  {spent ? "Recuperar" : "Usar"}
+                </button>
+              </div>
+            );
+          })}
           {preparedSpells.map(s => (
             <div class={`card spell-card combat-spell ${s.used ? "spell-card--used" : "card--lift"}`} key={s.id}>
               <div class="combat-spell__main">
@@ -328,12 +383,12 @@ export function CombatScreen() {
               </div>
               <button
                 class="buy-btn btn-with-icon"
-                disabled={s.used}
                 onClick={() => castPreparedSpell(s.id)}
-                aria-label={`Lanzar ${s.name}`}
+                aria-label={s.used ? `Recuperar ${s.name}` : `Lanzar ${s.name}`}
+                title={s.used ? "Pulsa para recuperar manualmente" : "Lanzar (gastar hoy)"}
               >
                 <Icon name={s.used ? "rest" : "magic"} />
-                {s.used ? "Usado" : "Lanzar"}
+                {s.used ? "Recuperar" : "Lanzar"}
               </button>
             </div>
           ))}

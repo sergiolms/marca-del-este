@@ -87,6 +87,27 @@ export function MagicScreen() {
     effects: cc.effects.map(e => e.id === id ? { ...e, active: !e.active } : e),
   }));
 
+  const useClassPower = (id: string) => {
+    const effect = c.effects.find(e => e.id === id);
+    if (!effect?.usesPerDay) return;
+    const spent = (effect.usesToday ?? 0) >= effect.usesPerDay;
+    updateActive(cc => ({
+      ...cc,
+      effects: cc.effects.map(e => {
+        if (e.id !== id || e.usesPerDay === undefined) return e;
+        if (spent) return { ...e, usesToday: 0 };
+        return { ...e, usesToday: Math.min(e.usesPerDay, (e.usesToday ?? 0) + 1) };
+      }),
+      combat: {
+        ...cc.combat,
+        timeline: [
+          entry(spent ? `↺ Recuperado: <b>${effect.name}</b>` : `✦ Poder activado: <b>${effect.name}</b>`, spent ? "heal" : "normal"),
+          ...cc.combat.timeline,
+        ].slice(0, 30),
+      },
+    }));
+  };
+
   const pickSpell = (picked: CatalogSpell | null) => {
     setPicking(false);
     if (!picked) {
@@ -236,15 +257,35 @@ export function MagicScreen() {
           {powerAbilities.length > 0 && (
             <>
               <h2 class="section__title" style={auraAbilities.length > 0 ? "margin-top:12px" : undefined}>Conjuros y poderes de clase</h2>
-              {powerAbilities.map(({ effect }) => (
-                <div class="card magic-feature" key={effect.id}>
+              {powerAbilities.map(({ effect }) => {
+                const hasUses = effect.usesPerDay !== undefined;
+                const used = effect.usesToday ?? 0;
+                const spent = hasUses && used >= (effect.usesPerDay ?? 0);
+                const ico = hasUses ? (
+                  <button
+                    class={`magic-feature__ico magic-feature__ico--btn ${spent ? "is-spent" : ""}`}
+                    onClick={() => useClassPower(effect.id)}
+                    aria-label={spent ? `Reiniciar ${effect.name}` : `Gastar un uso de ${effect.name}`}
+                    title={spent ? "Sin usos — pulsa para reiniciar manualmente" : "Gastar un uso"}
+                  >
+                    <Icon name={spent ? "rest" : "magic"} />
+                  </button>
+                ) : (
                   <div class="magic-feature__ico"><Icon name="magic" /></div>
-                  <div>
-                    <div class="magic-feature__title">{effect.name}</div>
-                    <div class="magic-feature__meta">{effect.kind} · {effect.duration || "Permanente"}</div>
+                );
+                return (
+                  <div class={`card magic-feature ${spent ? "magic-feature--off" : ""}`} key={effect.id}>
+                    {ico}
+                    <div>
+                      <div class="magic-feature__title">{effect.name}</div>
+                      <div class="magic-feature__meta">
+                        {effect.kind} · {effect.duration || "Permanente"}
+                        {hasUses ? ` · ${used} / ${effect.usesPerDay} usos hoy` : ""}
+                      </div>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </>
           )}
         </section>
@@ -283,7 +324,15 @@ export function MagicScreen() {
               onClick={() => setDetailSpell(s.id)}
             >
               <div style="display:flex;align-items:center;gap:10px">
-                <div class="spell-card__ico"><Icon name="magic" /></div>
+                <button
+                  class={`spell-card__ico spell-card__ico--btn ${s.used ? "is-spent" : ""}`}
+                  disabled={!s.prepared}
+                  onClick={e => { e.stopPropagation(); toggleUsed(s.id); }}
+                  aria-label={s.used ? `Restaurar ${s.name}` : `Lanzar ${s.name}`}
+                  title={!s.prepared ? "Equipa el conjuro para lanzarlo" : s.used ? "Pulsa para recuperar manualmente" : "Lanzar (gastar hoy)"}
+                >
+                  <Icon name={s.used ? "rest" : "magic"} />
+                </button>
                 <div style="flex:1">
                   <div class="spell-card__title">{s.name}</div>
                   <div class="spell-card__meta">
@@ -299,10 +348,7 @@ export function MagicScreen() {
                     onClick={() => togglePrepared(s.id)}
                     aria-label={s.prepared ? `Desequipar ${s.name}` : `Equipar ${s.name}`}
                   >
-                    <Icon name={s.prepared ? "equip" : "open"} />
-                  </button>
-                  <button class="d20" disabled={!s.prepared} onClick={() => toggleUsed(s.id)} aria-label={s.used ? `Restaurar ${s.name}` : `Marcar usado ${s.name}`}>
-                    {s.used ? <Icon name="rest" /> : <Icon name="magic" />}
+                    <Icon name={s.prepared ? "equip" : "prepare"} />
                   </button>
                   <button class="d20 d20--small" onClick={() => toggleLockSpell(s.id)} aria-label={`Editar ${s.name}`}><Icon name="edit" /></button>
                 </div>

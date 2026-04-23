@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { syncClassEffects, syncRaceEffects, syncAutoEffects, AUTO_EFFECT_KINDS, requiredLevelForAbility } from "../../src/rules/autofill";
+import { syncClassEffects, syncRaceEffects, syncAutoEffects, AUTO_EFFECT_KINDS, requiredLevelForAbility, parseAbilityUses } from "../../src/rules/autofill";
 import { newCharacter } from "../../src/state/character";
 
 describe("autofill class/race effects", () => {
@@ -81,6 +81,63 @@ describe("autofill class/race effects", () => {
   it("exports AUTO_EFFECT_KINDS", () => {
     expect(AUTO_EFFECT_KINDS).toContain("Habilidad de clase");
     expect(AUTO_EFFECT_KINDS).toContain("Rasgo racial");
+  });
+});
+
+describe("parseAbilityUses", () => {
+  it("parses 'una vez al día' as 1/day", () => {
+    expect(parseAbilityUses("Imposición de manos: cura 2 PG por nivel una vez al día", 1)).toEqual({ usesPerDay: 1, restReset: "long" });
+  });
+
+  it("parses word-number 'N veces al día'", () => {
+    expect(parseAbilityUses("A nivel 7: adopta forma animal 3 veces al día", 7)?.usesPerDay).toBe(3);
+  });
+
+  it("parses slash shorthand 1/día", () => {
+    expect(parseAbilityUses("Furia desatada 1/día", 1)?.usesPerDay).toBe(1);
+  });
+
+  it("picks highest graduated bracket the level qualifies for", () => {
+    const text = "Hechizar persona 1/día a nivel 1, 2/día a nivel 5, 3/día a nivel 10, 4/día a nivel 15";
+    expect(parseAbilityUses(text, 1)?.usesPerDay).toBe(1);
+    expect(parseAbilityUses(text, 5)?.usesPerDay).toBe(2);
+    expect(parseAbilityUses(text, 12)?.usesPerDay).toBe(3);
+    expect(parseAbilityUses(text, 20)?.usesPerDay).toBe(4);
+  });
+
+  it("scales 'una vez al día por cada N niveles' with level", () => {
+    const text = "Sana una enfermedad una vez al día por cada 5 niveles";
+    expect(parseAbilityUses(text, 1)?.usesPerDay).toBe(1);
+    expect(parseAbilityUses(text, 5)?.usesPerDay).toBe(1);
+    expect(parseAbilityUses(text, 6)?.usesPerDay).toBe(2);
+    expect(parseAbilityUses(text, 15)?.usesPerDay).toBe(3);
+  });
+
+  it("returns null for passive features", () => {
+    expect(parseAbilityUses("+2 a todas las tiradas de salvación", 1)).toBeNull();
+    expect(parseAbilityUses("Aura permanente de Protección contra el mal en 3 m", 1)).toBeNull();
+  });
+});
+
+describe("syncClassEffects — usage tracking", () => {
+  it("adds usesPerDay/usesToday to the paladin's Imposición de manos", () => {
+    const c = syncClassEffects(newCharacter({ classKey: "paladin", className: "Paladín", level: 1 }));
+    const laying = c.effects.find(e => e.name.includes("Imposición de manos"));
+    expect(laying?.usesPerDay).toBe(1);
+    expect(laying?.usesToday).toBe(0);
+    expect(laying?.restReset).toBe("long");
+  });
+
+  it("preserves usesToday across re-syncs (so level-ups don't refill daily powers)", () => {
+    const c = syncClassEffects(newCharacter({ classKey: "paladin", className: "Paladín", level: 1 }));
+    const laying = c.effects.find(e => e.name.includes("Imposición de manos"))!;
+    const afterUse = {
+      ...c,
+      effects: c.effects.map(e => e.id === laying.id ? { ...e, usesToday: 1 } : e),
+    };
+    const resynced = syncClassEffects({ ...afterUse, character: { ...afterUse.character, level: 2 } });
+    const again = resynced.effects.find(e => e.name.includes("Imposición de manos"));
+    expect(again?.usesToday).toBe(1);
   });
 });
 

@@ -1,7 +1,17 @@
 // Combat helpers: HP clamping, long-rest effects, weight totals.
 
-import type { Character, InventoryItem, Spell } from "./types";
+import type { Character, Effect, InventoryItem, Spell } from "./types";
 import { abilityModifier } from "./modifier";
+
+function resetEffectUses(effects: readonly Effect[], scope: "short" | "long"): Effect[] {
+  return effects.map(e => {
+    if (e.usesPerDay === undefined) return e;
+    // "short" rest refreshes only short-rest powers; "long" refreshes everything
+    // that has a reset window, since a full rest includes the briefer one.
+    if (scope === "short" && e.restReset !== "short") return e;
+    return { ...e, usesToday: 0 };
+  });
+}
 
 /** Clamp current HP into [0, hpMax + hpTemp]. Pure. */
 export function clampHp(hpCurrent: number, hpMax: number, hpTemp: number): number {
@@ -41,12 +51,13 @@ export function equippedWeight(items: readonly InventoryItem[]): number {
  */
 export function applyLongRest(c: Character): Character {
   const spells: Spell[] = c.spells.map(s => ({ ...s, used: false }));
+  const effects = resetEffectUses(c.effects, "long");
   const combat = {
     ...c.combat,
     hpCurrent: c.combat.hpMax,
     hpTemp: 0,
   };
-  return { ...c, combat, spells, updatedAt: new Date().toISOString() };
+  return { ...c, combat, spells, effects, updatedAt: new Date().toISOString() };
 }
 
 /**
@@ -64,6 +75,7 @@ export function applyShortRest(c: Character, rng: () => number = Math.random): {
       ...c.combat,
       hpCurrent: clampHp(c.combat.hpCurrent + recovered, c.combat.hpMax, c.combat.hpTemp),
     },
+    effects: resetEffectUses(c.effects, "short"),
     updatedAt: new Date().toISOString(),
   };
   return { next, rolled: roll, recovered };
