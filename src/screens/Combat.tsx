@@ -330,6 +330,24 @@ export function CombatScreen() {
           <EditableStat label="BA" value={c.combat.attackBonus} small
             onCommit={v => setCombat("attackBonus", v)} />
         </div>
+        <div class="ac-derived-grid">
+          <EditableStat
+            label="Toque"
+            value={c.combat.touchAc ?? ""}
+            display={(c.combat.touchAc ?? "").trim() || "—"}
+            inputMode="numeric"
+            small
+            onCommit={v => setCombat("touchAc", v)}
+          />
+          <EditableStat
+            label="Desprevenido"
+            value={c.combat.flatFootedAc ?? ""}
+            display={(c.combat.flatFootedAc ?? "").trim() || "—"}
+            inputMode="numeric"
+            small
+            onCommit={v => setCombat("flatFootedAc", v)}
+          />
+        </div>
         {(ac.armorSource || ac.bonuses.length > 0) && (
           <div class="ac-breakdown">
             <span>Base {acValue(ac.base, acMode)}</span>

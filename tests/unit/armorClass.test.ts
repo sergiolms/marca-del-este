@@ -21,6 +21,7 @@ describe("armor class", () => {
 
   it("uses the best equipped armor and equipped shield in the calculated AC", () => {
     const c = newCharacter();
+    c.stats.dexterity = 16;
     c.inventory.items = [
       { id: "leather", locked: true, equipped: true, name: "Armadura de cuero", quantity: 1, weight: 8, value: "", notes: "", armorClass: "7 [12]" },
       { id: "shield", locked: true, equipped: true, name: "Escudo", quantity: 1, weight: 5, value: "", notes: "", armorClass: "-1 [11]" },
@@ -28,7 +29,9 @@ describe("armor class", () => {
 
     const ac = calculateArmorClass(c);
     expect(ac.armorSource).toBe("Armadura de cuero");
-    expect(ac.calculated).toEqual({ descending: 6, ascending: 13 });
+    expect(ac.calculated).toEqual({ descending: 4, ascending: 15 });
+    expect(ac.touch).toEqual({ descending: 7, ascending: 12 });
+    expect(ac.flatFooted).toEqual({ descending: 6, ascending: 13 });
   });
 
   it("falls back to catalog armor class for existing inventory items without the stored field", () => {
@@ -79,5 +82,18 @@ describe("armor class", () => {
     expect(acValue(ac.calculated, "descending")).toBe(6);
     expect(acBonusLabel(1, "ascending")).toBe("+1");
     expect(acBonusLabel(1, "descending")).toBe("-1");
+  });
+
+  it("does not let flat-footed AC improve when dexterity is a penalty", () => {
+    const c = newCharacter();
+    c.combat = setBaseArmorClass(c.combat, 10, "ascending");
+    c.stats.dexterity = 8;
+    c.inventory.items = [
+      { id: "shield", locked: true, equipped: true, name: "Escudo", quantity: 1, weight: 5, value: "", notes: "", armorClass: "-1 [11]" },
+    ];
+
+    const ac = calculateArmorClass(c);
+    expect(acValue(ac.calculated, "ascending")).toBe(10);
+    expect(acValue(ac.flatFooted, "ascending")).toBe(10);
   });
 });

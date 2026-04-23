@@ -14,12 +14,18 @@ html, body {
   text-rendering: optimizeLegibility;
   background: #1e1814;
   touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 button, input, select, textarea {
   font-family: inherit; color: inherit;
 }
 input, select, textarea { font-size: 16px; }
+input, textarea {
+  user-select: text;
+  -webkit-user-select: text;
+}
 button, [role="button"], a {
   touch-action: manipulation;
 }
@@ -128,7 +134,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 600; letter-spacing:
 .topbar {
   padding: calc(10px + env(safe-area-inset-top)) 12px 10px;
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   gap: 12px; align-items: center;
   background: linear-gradient(180deg, #c8a84a 0%, var(--parchment-deep) 18%, var(--parchment) 100%);
   border-bottom: 2px solid #6a4a10;
@@ -139,8 +145,18 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 600; letter-spacing:
 .topbar__label {
   font-family: var(--font-display); font-size: 14px; color: var(--ink-muted);
   letter-spacing: .16em; text-transform: uppercase;
+  justify-self: start;
+  min-width: 0;
+  max-width: min(24vw, 108px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
-.fan { display: flex; align-items: center; height: 54px; justify-content: center; }
+.fan {
+  display: flex; align-items: center; height: 54px; justify-content: center;
+  grid-column: 2;
+  justify-self: center;
+}
 .fan__avatar {
   width: 42px; height: 42px; border-radius: 50%;
   background: linear-gradient(145deg, #2a1a08, #1a0e04);
@@ -181,6 +197,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 600; letter-spacing:
   display: flex; align-items: center; justify-content: center;
   font-size: 18px; line-height: 1;
   cursor: pointer;
+  justify-self: end;
 }
 .fan__add .icon { width: 18px; height: 18px; }
 
@@ -663,6 +680,12 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 600; letter-spacing:
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.ac-derived-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  margin-top: 6px;
+}
 .ac-breakdown {
   display: flex;
   flex-wrap: wrap;
@@ -947,6 +970,35 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 600; letter-spacing:
   background: linear-gradient(90deg, #e49956, #b14f28 60%, #87391f);
   animation: over-weight 900ms var(--ease-standard) infinite;
 }
+.load-locations {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+.load-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--aged-line);
+  background: var(--parchment-deep);
+  color: var(--ink-muted);
+  font-size: 11px;
+  font-weight: 700;
+}
+.load-pill b {
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 13px;
+}
+.load-pill--over {
+  background: #f4cdc0;
+  border-color: #b88177;
+  color: #87391f;
+}
+.load-pill--over b { color: #6d2417; }
 @keyframes over-weight {
   0%, 100% { filter: brightness(1); }
   50% { filter: brightness(1.1); }
@@ -1424,7 +1476,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 600; letter-spacing:
   border: 1px solid var(--aged-line);
   border-radius: 10px;
   background: var(--card-bg); color: var(--ink);
-  font-family: var(--font-body); font-size: 14px; font-weight: 500;
+  font-family: var(--font-body); font-size: 16px; font-weight: 500;
   transition: border-color 160ms, box-shadow 160ms;
 }
 .edit-grid input:focus, .edit-grid select:focus, .edit-grid textarea:focus {
@@ -1475,7 +1527,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 600; letter-spacing:
   border: 1px solid var(--aged-line);
   border-radius: 10px;
   background: var(--parchment-deep); color: var(--ink);
-  font-size: 14px; width: 100%; margin-bottom: 8px;
+  font-size: 16px; width: 100%; margin-bottom: 8px;
 }
 .picker__filters { flex: 0 0 auto; padding: 0 !important; margin-bottom: 10px; }
 .picker__list {
@@ -1709,7 +1761,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 600; letter-spacing:
   border: 1px solid var(--aged-line);
   border-radius: 10px;
   background: var(--card-bg); color: var(--ink);
-  font-family: var(--font-body); font-size: 14px; font-weight: 500;
+  font-family: var(--font-body); font-size: 16px; font-weight: 500;
 }
 .autocomp > input:focus {
   outline: none; border-color: var(--crit);

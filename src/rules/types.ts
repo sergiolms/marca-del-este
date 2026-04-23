@@ -54,6 +54,10 @@ export interface InventoryItem {
   id: string;
   locked: boolean;
   equipped: boolean;
+  /** Where the item is carried: hand, stored, or inside another inventory item. */
+  location?: "hand" | "stored" | `container:${string}`;
+  /** Capacity in kg when this item acts as a container. */
+  containerCapacity?: number;
   name: string;
   quantity: number;
   weight: number;
@@ -131,6 +135,10 @@ export interface Combat {
   ac: number;           // base descending
   acAscending: number;  // base ascending in brackets
   acMode?: "descending" | "ascending";
+  /** Manual sheet value for touch AC / CA de toque. Kept as text to allow negative or house-rule notation. */
+  touchAc?: string;
+  /** Manual sheet value for flat-footed AC / CA desprevenido. Kept as text to allow negative or house-rule notation. */
+  flatFootedAc?: string;
   initiative: string;
   surprise: string;
   attackBonus: string;

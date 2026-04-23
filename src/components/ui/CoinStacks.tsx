@@ -13,6 +13,7 @@ const MAX_PILES = 3;
 
 export function CoinStacks({ wallet }: Props) {
   const [editing, setEditing] = useState<keyof Wallet | null>(null);
+  const [draft, setDraft] = useState("");
 
   const cols: Col[] = [
     { key: "platinum", kind: "platinum", full: "Platino", sub: "PLT", count: wallet.platinum },
@@ -24,6 +25,14 @@ export function CoinStacks({ wallet }: Props) {
 
   const setCount = (k: keyof Wallet, n: number) => {
     updateActive(cc => ({ ...cc, money: { ...cc.money, [k]: Math.max(0, Math.floor(n)) } }));
+  };
+  const startEdit = (k: keyof Wallet, value: number) => {
+    setDraft(String(value));
+    setEditing(k);
+  };
+  const commitEdit = (k: keyof Wallet) => {
+    setCount(k, Number(draft) || 0);
+    setEditing(null);
   };
 
   return (
@@ -77,12 +86,16 @@ export function CoinStacks({ wallet }: Props) {
                     inputMode="numeric"
                     min="0"
                     autofocus
-                    value={c.count}
-                    onChange={e => { setCount(c.key, Number((e.currentTarget as HTMLInputElement).value) || 0); setEditing(null); }}
-                    onBlur={e => { setCount(c.key, Number((e.currentTarget as HTMLInputElement).value) || 0); setEditing(null); }}
+                    value={draft}
+                    onInput={e => setDraft((e.currentTarget as HTMLInputElement).value)}
+                    onKeyDown={e => {
+                      if (e.key === "Enter") commitEdit(c.key);
+                      if (e.key === "Escape") setEditing(null);
+                    }}
+                    onBlur={() => commitEdit(c.key)}
                   />
                 ) : (
-                  <button class="coin-col__label" onClick={() => setEditing(c.key)} aria-label={`Editar ${c.full.toLowerCase()}`}>
+                  <button class="coin-col__label" onClick={() => startEdit(c.key, c.count)} aria-label={`Editar ${c.full.toLowerCase()}`}>
                     {hasOverflow ? `×${c.count}` : `${c.count}`}
                   </button>
                 )}

@@ -7,12 +7,13 @@ import { entry } from "../state/timeline";
 import { parsePriceToCopper, walletToCopper, copperToWallet } from "../rules/wallet";
 import { Icon } from "../components/ui/Icon";
 import { canEquipItem, equipLimitReason, isWeapon, setEquipped, syncEquippedAttacks, toggleEquipped } from "../rules/equip";
+import { containerCapacity, containerLocation, inventoryLoadSummary, isContainerItem, itemLocation, locationLabel, type InventoryLocation } from "../rules/inventory";
 import { EnchantmentPicker } from "../components/ui/EnchantmentPicker";
-import { ItemAutocomplete } from "../components/ui/ItemAutocomplete";
+import { ItemAutocomplete, type InventoryAutocompleteItem } from "../components/ui/ItemAutocomplete";
 import { ItemDetail } from "../components/ui/ItemDetail";
 import { enchantmentLabels } from "../rules/attackMath";
 import type { InventoryItem } from "../rules/types";
-import type { EnchantmentTarget, ShopItem } from "../data/catalog/types";
+import type { EnchantmentTarget } from "../data/catalog/types";
 
 export function InventoryScreen() {
   const c = activeCharacter.value;
@@ -22,6 +23,7 @@ export function InventoryScreen() {
   const carryWeight = totalCarriedWeight(c.inventory.items);
   const wornWeight = equippedWeight(c.inventory.items);
   const overloaded = carryWeight > c.inventory.maxWeight;
+  const loadSummary = inventoryLoadSummary(c.inventory.items);
 
   const addItem = () => {
     updateActive(cc => ({
@@ -51,7 +53,17 @@ export function InventoryScreen() {
     }
     return toggleEquipped(cc, id);
   });
-  const applyShopMatch = (id: string, it: ShopItem) => {
+  const applyShopMatch = (id: string, it: InventoryAutocompleteItem) => {
+    const capacity = containerCapacity({
+      id,
+      locked: false,
+      equipped: false,
+      name: it.name,
+      quantity: 1,
+      weight: it.weight ?? 0,
+      value: it.cost,
+      notes: it.notes ?? "",
+    });
     patch(id, {
       name: it.name,
       weight: it.weight ?? 0,
@@ -60,6 +72,7 @@ export function InventoryScreen() {
       damage: it.damage,
       ranged: it.ranged,
       armorClass: it.armorClass,
+      containerCapacity: capacity ?? undefined,
     });
   };
 
@@ -97,10 +110,14 @@ export function InventoryScreen() {
   };
 
   // Sort: equipped first, then by name
-  const sorted = [...c.inventory.items].sort((a, b) => {
-    if (a.equipped !== b.equipped) return a.equipped ? -1 : 1;
-    return a.name.localeCompare(b.name, "es");
-  });
+  const sorted = c.inventory.items
+    .map((item, index) => ({ item, index }))
+    .sort((a, b) => {
+      if (!a.item.locked || !b.item.locked) return a.index - b.index;
+      if (a.item.equipped !== b.item.equipped) return a.item.equipped ? -1 : 1;
+      return a.item.name.localeCompare(b.item.name, "es");
+    })
+    .map(row => row.item);
 
   const detailItem = detailFor ? c.inventory.items.find(i => i.id === detailFor) : null;
 
@@ -126,6 +143,22 @@ export function InventoryScreen() {
               Llevas puestos <b style="color:var(--ink)">{wornWeight} kg</b> que no cuentan para la carga.
             </div>
           )}
+          <div class="load-locations">
+            <div class="load-pill">
+              <span>A mano</span>
+              <b>{loadSummary.hand} kg</b>
+            </div>
+            <div class="load-pill">
+              <span>Guardado</span>
+              <b>{loadSummary.stored} kg</b>
+            </div>
+            {loadSummary.containers.map(row => (
+              <div class={`load-pill ${row.exceeded ? "load-pill--over" : ""}`} key={row.item.id}>
+                <span>{row.item.name || "Contenedor"}</span>
+                <b>{row.load}{row.capacity !== null ? ` / ${row.capacity}` : ""} kg</b>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -173,6 +206,7 @@ export function InventoryScreen() {
                     {enchNames.map(e => <span class="chip chip--plus" style="padding:1px 6px;font-size:10px">{e}</span>)}
                     {i.damage && <span class="chip chip--fire" style="padding:1px 6px;font-size:10px">{i.damage}</span>}
                     {i.armorClass && <span class="chip chip--cold" style="padding:1px 6px;font-size:10px">CA {i.armorClass}</span>}
+                    <span class={containerOverClass(i, loadSummary)}>{locationLabel(itemLocation(i), c.inventory.items)}</span>
                     <span>{i.weight} kg</span>
                     {i.value && <><span>·</span><span>{i.value}</span></>}
                   </div>
@@ -221,6 +255,29 @@ export function InventoryScreen() {
                     <span>CA / bonus</span>
                     <input value={i.armorClass ?? ""} placeholder="5 [14] o -1 [11]" onInput={e => patch(i.id, { armorClass: (e.currentTarget as HTMLInputElement).value || undefined })} />
                   </label>
+                  <label>
+                    <span>Ubicación</span>
+                    <select value={itemLocation(i)} onChange={e => patch(i.id, { location: (e.currentTarget as HTMLSelectElement).value as InventoryLocation })}>
+                      <option value="hand">A mano</option>
+                      <option value="stored">Guardado</option>
+                      {c.inventory.items.filter(item => item.id !== i.id && isContainerItem(item)).map(container => (
+                        <option value={containerLocation(container.id)}>En {container.name || "contenedor"}</option>
+                      ))}
+                    </select>
+                  </label>
+                  {isContainerItem(i) && (
+                    <label>
+                      <span>Capacidad (kg)</span>
+                      <input
+                        type="number"
+                        inputMode="decimal"
+                        min="0"
+                        step="0.5"
+                        value={i.containerCapacity ?? containerCapacity(i) ?? ""}
+                        onInput={e => patch(i.id, { containerCapacity: Number((e.currentTarget as HTMLInputElement).value.replace(",", ".")) || undefined })}
+                      />
+                    </label>
+                  )}
                   <label class="edit-check">
                     <input type="checkbox" checked={!!i.ranged} onChange={e => patch(i.id, { ranged: (e.currentTarget as HTMLInputElement).checked })} />
                     <span>A distancia</span>
@@ -280,4 +337,10 @@ export function InventoryScreen() {
       <div style="height:80px"></div>
     </div>
   );
+}
+
+function containerOverClass(item: InventoryItem, summary: ReturnType<typeof inventoryLoadSummary>): string {
+  const location = itemLocation(item);
+  const row = summary.containers.find(c => c.location === location);
+  return row?.exceeded ? "chip chip--fire" : "chip";
 }

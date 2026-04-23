@@ -200,7 +200,7 @@ export function ShopScreen() {
           placeholder="Buscar…"
           value={q}
           onInput={e => setQ((e.currentTarget as HTMLInputElement).value)}
-          style="width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--aged-line);background:var(--parchment-deep);color:var(--ink);font-size:14px"
+          style="width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--aged-line);background:var(--parchment-deep);color:var(--ink);font-size:16px"
         />
       </div>
 

@@ -1,6 +1,7 @@
 import type { Character, Combat, InventoryItem } from "./types";
 import { enchantmentBonus } from "./attackMath";
 import { AUTO_EFFECT_KINDS } from "./autofill";
+import { abilityModifier } from "./modifier";
 import shopCatalog from "../data/catalog/shopItems.json";
 import type { ShopItem } from "../data/catalog/types";
 
@@ -18,10 +19,14 @@ export interface ArmorClassBreakdown {
   base: ArmorClassPair;
   armorBase: ArmorClassPair;
   calculated: ArmorClassPair;
+  touch: ArmorClassPair;
+  flatFooted: ArmorClassPair;
   armorSource?: string;
-  bonuses: Array<{ source: string; bonus: number }>;
+  bonuses: Array<{ source: string; bonus: number; kind: ArmorClassBonusKind }>;
   totalBonus: number;
 }
+
+type ArmorClassBonusKind = "dexterity" | "armor" | "shield" | "gear" | "effect";
 
 export function acValue(pair: ArmorClassPair, mode: AcMode): number {
   return mode === "ascending" ? pair.ascending : pair.descending;
@@ -61,7 +66,9 @@ export function calculateArmorClass(c: Character): ArmorClassBreakdown {
   const base = baseArmorClass(c.combat);
   let armorBase = base;
   let armorSource: string | undefined;
-  const bonuses: Array<{ source: string; bonus: number }> = [];
+  const bonuses: ArmorClassBreakdown["bonuses"] = [];
+  const dexBonus = abilityModifier(c.stats.dexterity);
+  if (dexBonus !== 0) bonuses.push({ source: "DES", bonus: dexBonus, kind: "dexterity" });
 
   for (const item of c.inventory.items) {
     if (!item.equipped) continue;
@@ -78,28 +85,34 @@ export function calculateArmorClass(c: Character): ArmorClassBreakdown {
     const enchBonus = enchantmentBonus(item.enchantments);
 
     if (parsed?.kind === "bonus" && parsed.bonus > 0) {
-      bonuses.push({ source: item.name || "Objeto equipado", bonus: parsed.bonus });
+      bonuses.push({ source: item.name || "Objeto equipado", bonus: parsed.bonus, kind: isShieldItem(item) ? "shield" : "gear" });
     }
     if (enchBonus > 0 && (isArmorItem(item) || isShieldItem(item))) {
-      bonuses.push({ source: `${item.name || "Objeto equipado"} mágico`, bonus: enchBonus });
+      bonuses.push({ source: `${item.name || "Objeto equipado"} mágico`, bonus: enchBonus, kind: isShieldItem(item) ? "shield" : "armor" });
     }
     if (item.enchantments?.includes("defensiva")) {
-      bonuses.push({ source: `${item.name || "Arma"} defensiva`, bonus: 2 });
+      bonuses.push({ source: `${item.name || "Arma"} defensiva`, bonus: 2, kind: "gear" });
     }
 
     if (!parsed && !enchBonus) {
       const textBonus = acBonusFromText(`${item.name} ${item.notes}`);
-      if (textBonus > 0) bonuses.push({ source: item.name || "Objeto equipado", bonus: textBonus });
+      if (textBonus > 0) bonuses.push({ source: item.name || "Objeto equipado", bonus: textBonus, kind: "gear" });
     }
   }
 
   for (const effect of c.effects) {
     if (!effect.active || AUTO_EFFECT_KINDS.includes(effect.kind)) continue;
     const bonus = acBonusFromText(`${effect.name} ${effect.notes}`);
-    if (bonus > 0) bonuses.push({ source: effect.name || "Efecto activo", bonus });
+    if (bonus > 0) bonuses.push({ source: effect.name || "Efecto activo", bonus, kind: "effect" });
   }
 
   const totalBonus = bonuses.reduce((sum, b) => sum + b.bonus, 0);
+  const flatFootedBonus = bonuses
+    .filter(b => b.kind !== "dexterity" || b.bonus < 0)
+    .reduce((sum, b) => sum + b.bonus, 0);
+  const touchBonus = bonuses
+    .filter(b => b.kind !== "armor" && b.kind !== "shield")
+    .reduce((sum, b) => sum + b.bonus, 0);
   return {
     mode,
     base,
@@ -107,6 +120,14 @@ export function calculateArmorClass(c: Character): ArmorClassBreakdown {
     calculated: {
       descending: armorBase.descending - totalBonus,
       ascending: armorBase.ascending + totalBonus,
+    },
+    touch: {
+      descending: base.descending - touchBonus,
+      ascending: base.ascending + touchBonus,
+    },
+    flatFooted: {
+      descending: armorBase.descending - flatFootedBonus,
+      ascending: armorBase.ascending + flatFootedBonus,
     },
     armorSource,
     bonuses,

@@ -34,6 +34,8 @@ export function newCharacter(seed: Partial<Character["character"]> = {}): Charac
       hpTemp: 0,
       ac: 9,
       acAscending: 10,
+      touchAc: "",
+      flatFootedAc: "",
       initiative: "+0",
       surprise: "1-2 en 1d6",
       attackBonus: "+0",
