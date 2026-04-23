@@ -19,6 +19,11 @@ describe("armor class", () => {
     expect(parseArmorClass("-1 [11]")).toEqual({ kind: "bonus", bonus: 1 });
   });
 
+  it("reads bare armor values using the active armor-class mode", () => {
+    expect(parseArmorClass("14", "ascending")).toEqual({ kind: "base", pair: { descending: 5, ascending: 14 } });
+    expect(parseArmorClass("5", "descending")).toEqual({ kind: "base", pair: { descending: 5, ascending: 14 } });
+  });
+
   it("uses the best equipped armor and equipped shield in the calculated AC", () => {
     const c = newCharacter();
     c.stats.dexterity = 16;
@@ -56,6 +61,18 @@ describe("armor class", () => {
     const ac = calculateArmorClass(c);
     expect(ac.totalBonus).toBe(4);
     expect(ac.calculated).toEqual({ descending: -1, ascending: 20 });
+  });
+
+  it("adds armor enchantments to a manually entered ascending AC value", () => {
+    const c = newCharacter();
+    c.combat = setBaseArmorClass(c.combat, 10, "ascending");
+    c.inventory.items = [
+      { id: "mail", locked: true, equipped: true, name: "Armadura de malla", quantity: 1, weight: 15, value: "", notes: "", armorClass: "14", enchantments: ["armadura-1"] },
+    ];
+
+    const ac = calculateArmorClass(c);
+    expect(ac.armorSource).toBe("Armadura de malla");
+    expect(acValue(ac.calculated, "ascending")).toBe(15);
   });
 
   it("ignores conditional automatic class/race CA text but accepts manual active effects", () => {

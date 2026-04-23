@@ -335,7 +335,7 @@ export function CombatScreen() {
             label="Toque"
             value={c.combat.touchAc ?? ""}
             display={(c.combat.touchAc ?? "").trim() || "—"}
-            inputMode="numeric"
+            inputMode="text"
             small
             onCommit={v => setCombat("touchAc", v)}
           />
@@ -343,7 +343,7 @@ export function CombatScreen() {
             label="Desprevenido"
             value={c.combat.flatFootedAc ?? ""}
             display={(c.combat.flatFootedAc ?? "").trim() || "—"}
-            inputMode="numeric"
+            inputMode="text"
             small
             onCommit={v => setCombat("flatFootedAc", v)}
           />

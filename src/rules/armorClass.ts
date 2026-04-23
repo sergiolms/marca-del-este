@@ -72,7 +72,7 @@ export function calculateArmorClass(c: Character): ArmorClassBreakdown {
 
   for (const item of c.inventory.items) {
     if (!item.equipped) continue;
-    const parsed = parseArmorClass(itemArmorClass(item));
+    const parsed = parseArmorClass(itemArmorClass(item), mode);
     if (parsed?.kind === "base" && isBetterArmor(parsed.pair, armorBase)) {
       armorBase = parsed.pair;
       armorSource = item.name;
@@ -81,7 +81,7 @@ export function calculateArmorClass(c: Character): ArmorClassBreakdown {
 
   for (const item of c.inventory.items) {
     if (!item.equipped) continue;
-    const parsed = parseArmorClass(itemArmorClass(item));
+    const parsed = parseArmorClass(itemArmorClass(item), mode);
     const enchBonus = enchantmentBonus(item.enchantments);
 
     if (parsed?.kind === "bonus" && parsed.bonus > 0) {
@@ -139,7 +139,7 @@ type ParsedArmorClass =
   | { kind: "base"; pair: ArmorClassPair }
   | { kind: "bonus"; bonus: number };
 
-export function parseArmorClass(value: string | undefined): ParsedArmorClass | null {
+export function parseArmorClass(value: string | undefined, mode: AcMode = "descending"): ParsedArmorClass | null {
   if (!value) return null;
   const normalized = value.replace("−", "-");
   const match = normalized.match(/(-?\d+)\s*(?:\[\s*(-?\d+)\s*\])?/);
@@ -148,6 +148,9 @@ export function parseArmorClass(value: string | undefined): ParsedArmorClass | n
   const bracket = match[2] !== undefined ? Number(match[2]) : undefined;
   if (!Number.isFinite(first)) return null;
   if (first <= 0) return { kind: "bonus", bonus: Math.abs(first) };
+  if (bracket === undefined && mode === "ascending") {
+    return { kind: "base", pair: pairFromAscending(first) };
+  }
   return {
     kind: "base",
     pair: {
